@@ -1,0 +1,70 @@
+{
+  "name": "Plant",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nome da planta"
+    },
+    "strain": {
+      "type": "string",
+      "description": "Gen\u00e9tica / strain"
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "germinacao",
+        "vegetativo",
+        "floracao",
+        "colheita"
+      ],
+      "default": "germinacao"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "harvest_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "medium": {
+      "type": "string",
+      "enum": [
+        "solo",
+        "coco",
+        "hidroponia",
+        "aeroponia"
+      ],
+      "default": "solo"
+    },
+    "pot_size": {
+      "type": "number",
+      "description": "Tamanho do vaso em litros"
+    },
+    "tent": {
+      "type": "string",
+      "description": "Grow tent / espa\u00e7o"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Observa\u00e7\u00f5es gerais"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "Foto da planta"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ativa",
+        "colhida",
+        "perdida"
+      ],
+      "default": "ativa"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

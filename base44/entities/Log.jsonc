@@ -1,0 +1,57 @@
+{
+  "name": "Log",
+  "type": "object",
+  "properties": {
+    "plant_id": {
+      "type": "string",
+      "description": "ID da planta"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "rega",
+        "nutri\u00e7\u00e3o",
+        "poda",
+        "foto",
+        "medi\u00e7\u00e3o",
+        "observa\u00e7\u00e3o"
+      ],
+      "default": "observa\u00e7\u00e3o"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "ph": {
+      "type": "number",
+      "description": "pH da \u00e1gua"
+    },
+    "ec": {
+      "type": "number",
+      "description": "EC/PPM"
+    },
+    "water_ml": {
+      "type": "number",
+      "description": "Volume de \u00e1gua em ml"
+    },
+    "temp": {
+      "type": "number",
+      "description": "Temperatura \u00b0C"
+    },
+    "humidity": {
+      "type": "number",
+      "description": "Umidade %"
+    },
+    "photo_url": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "plant_id",
+    "type",
+    "date"
+  ]
+}
