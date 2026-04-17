@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
-import { Leaf, Droplets, Plus, TrendingUp, Sprout } from 'lucide-react';
+import { Leaf, Droplets, Plus, TrendingUp, Sprout, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { differenceInDays, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -12,11 +12,18 @@ import PlantForm from '@/components/plants/PlantForm';
 
 export default function Home() {
   const [showForm, setShowForm] = useState(false);
+  const queryClient = useQueryClient();
 
-  const { data: plants = [], refetch: refetchPlants } = useQuery({
+  const { data: plants = [] } = useQuery({
     queryKey: ['plants'],
     queryFn: () => base44.entities.Plant.list('-created_date'),
   });
+
+  const deletePlant = async (id) => {
+    if (!confirm('Apagar esta planta definitivamente?')) return;
+    await base44.entities.Plant.delete(id);
+    queryClient.invalidateQueries({ queryKey: ['plants'] });
+  };
 
   const { data: logs = [] } = useQuery({
     queryKey: ['logs'],
@@ -64,7 +71,7 @@ export default function Home() {
             ) : (
               <div className="space-y-2">
                 {activePlants.slice(0, 6).map(plant => (
-                  <PlantRow key={plant.id} plant={plant} />
+                  <PlantRow key={plant.id} plant={plant} onDelete={deletePlant} />
                 ))}
                 {activePlants.length > 6 && (
                   <p className="text-center text-sm text-primary py-2">
@@ -97,7 +104,7 @@ export default function Home() {
         <PlantForm
           onClose={() => setShowForm(false)}
           onSave={() => {
-            refetchPlants();
+            queryClient.invalidateQueries({ queryKey: ['plants'] });
             setShowForm(false);
           }}
         />
@@ -106,14 +113,14 @@ export default function Home() {
   );
 }
 
-function PlantRow({ plant }) {
+function PlantRow({ plant, onDelete }) {
   const days = plant.start_date
     ? differenceInDays(new Date(), new Date(plant.start_date))
     : null;
 
   return (
-    <Link to={`/plant/${plant.id}`}>
-      <div className="flex items-center gap-3 p-4 rounded-2xl border border-border/50 bg-card card-hover">
+    <div className="flex items-center gap-3 p-4 rounded-2xl border border-border/50 bg-card card-hover group">
+      <Link to={`/plant/${plant.id}`} className="flex items-center gap-3 flex-1 min-w-0">
         <div className="w-10 h-10 rounded-xl bg-muted border border-border/40 overflow-hidden flex-shrink-0 flex items-center justify-center">
           {plant.photo_url ? (
             <img src={plant.photo_url} alt={plant.name} className="w-full h-full object-cover" />
@@ -125,14 +132,20 @@ function PlantRow({ plant }) {
           <p className="font-semibold text-sm text-foreground truncate">{plant.name}</p>
           {plant.strain && <p className="text-xs text-muted-foreground truncate">{plant.strain}</p>}
         </div>
-        <div className="flex flex-col items-end gap-1">
+        <div className="flex flex-col items-end gap-1 mr-2">
           <StagesBadge stage={plant.stage} />
           {days !== null && (
             <span className="text-xs text-muted-foreground">Dia {days}</span>
           )}
         </div>
-      </div>
-    </Link>
+      </Link>
+      <button
+        onClick={() => onDelete(plant.id)}
+        className="w-8 h-8 rounded-xl flex items-center justify-center text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-all opacity-0 group-hover:opacity-100 flex-shrink-0"
+      >
+        <Trash2 className="w-3.5 h-3.5" />
+      </button>
+    </div>
   );
 }
 
