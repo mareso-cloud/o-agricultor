@@ -20,14 +20,14 @@ export default function Header({ onNewPlant }) {
             <Bell className="w-4 h-4" />
           </button>
           <Button
-            onClick={onNewPlant}
-            className="h-9 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-medium text-sm rounded-xl glow-green transition-all hover:scale-105"
-          >
+            onClick={onNewPlant} className="inline-flex items-center justify-center gap-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow py-2 h-9 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-medium text-sm rounded-xl glow-green transition-all hover:scale-105 hidden">
+
+            
             <Plus className="w-4 h-4 mr-1.5" />
             Nova Planta
           </Button>
         </div>
       </div>
-    </header>
-  );
+    </header>);
+
 }

@@ -39,7 +39,7 @@ export default function PlantCard({ plant, onClick }) {
       </div>
 
       {/* Info */}
-      <div className="p-4">
+      <div className="p-4 hidden">
         <div className="flex items-start justify-between mb-2 hidden">
           <div>
             <h3 className="font-syne font-semibold text-foreground text-base leading-tight">{plant.name}</h3>
@@ -48,7 +48,7 @@ export default function PlantCard({ plant, onClick }) {
           <ChevronRight className="w-4 h-4 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-0.5 transition-all mt-0.5" />
         </div>
 
-        <div className="flex items-center gap-4 mt-3 pt-3 border-t border-border/40">
+        <div className="flex items-center gap-4 mt-3 pt-3 border-t border-border/40 hidden">
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <Calendar className="w-3.5 h-3.5 text-primary/60" />
             <span>Dia {daysSince}</span>
