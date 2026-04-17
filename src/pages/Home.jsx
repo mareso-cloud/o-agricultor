@@ -35,57 +35,57 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <Header onNewPlant={() => setShowForm(true)} />
 
-      <main className="max-w-6xl mx-auto px-4 py-6 hidden">
-        {loading ?
-        <div className="flex items-center justify-center py-32">
-            <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-          </div> :
-        plants.length === 0 ?
-        <EmptyState onNewPlant={() => setShowForm(true)} /> :
+      
 
-        <>
-            {/* Stats */}
-            <StatsBar plants={activePlants} />
 
-            {/* Search & Filter */}
-            <div className="flex gap-3 mb-6">
-              <div className="relative flex-1">
-                <Search className="lucide lucide-search absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground hidden" />
-                <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Buscar planta..." className="w-full pl-9 pr-4 h-10 bg-card border border-border/60 rounded-xl text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 focus:border-primary/40 hidden" />
-              
-              
-              </div>
-              <div className="flex gap-1.5">
-                {['all', 'germinacao', 'vegetativo', 'floracao', 'colheita'].map((stage) =>
-              <button
-                key={stage}
-                onClick={() => setFilterStage(stage)} className="h-10 px-3 rounded-xl text-xs font-medium border transition-all border-border/50 text-muted-foreground hover:border-border bg-card hidden">
 
-                
-                    {stage === 'all' ? 'Todas' : stage === 'germinacao' ? '🌱' : stage === 'vegetativo' ? '🌿' : stage === 'floracao' ? '🌸' : '🌾'}
-                  </button>
-              )}
-              </div>
-            </div>
 
-            {/* Grid */}
-            {filtered.length === 0 ?
-          <div className="text-center py-16 text-muted-foreground">
-                <p>Nenhuma planta encontrada</p>
-              </div> :
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 animate-fade-in">
-                {filtered.map((plant) =>
-            <PlantCard key={plant.id} plant={plant} onClick={() => navigate(`/plant/${plant.id}`)} />
-            )}
-              </div>
-          }
-          </>
-        }
-      </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
 
       {showForm &&
       <PlantForm
