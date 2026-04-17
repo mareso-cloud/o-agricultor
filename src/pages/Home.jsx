@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
-import { Leaf, Droplets, Plus, TrendingUp, Sprout, Trash2 } from 'lucide-react';
+import { Leaf, Droplets, Plus, TrendingUp, ClipboardList, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { differenceInDays, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -12,6 +12,7 @@ import PlantForm from '@/components/plants/PlantForm';
 
 export default function Home() {
   const [showForm, setShowForm] = useState(false);
+  const [tab, setTab] = useState('plantas');
   const queryClient = useQueryClient();
 
   const { data: plants = [] } = useQuery({
@@ -31,7 +32,6 @@ export default function Home() {
   });
 
   const activePlants = plants.filter(p => p.status !== 'perdida' && p.status !== 'colhida');
-  const flowering = plants.filter(p => p.stage === 'floração' || p.stage === 'floracao').length;
   const recentLogs = logs.slice(0, 5);
   const today = format(new Date(), 'yyyy-MM-dd');
 
@@ -55,34 +55,36 @@ export default function Home() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+        <div className="grid grid-cols-2 gap-3 mb-6">
           <StatCard icon={Leaf} label="Plantas Ativas" value={activePlants.length} color="green" />
-          <StatCard icon={Sprout} label="Em Floração" value={flowering} color="emerald" />
           <StatCard icon={Droplets} label="Regas Hoje" value={logs.filter(l => l.type === 'rega' && l.date === today).length} color="blue" />
-          <StatCard icon={TrendingUp} label="Registros" value={logs.length} color="purple" />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-5">
-          {/* Plants list */}
-          <div>
-            <h2 className="font-syne text-lg font-bold text-foreground mb-3">Plantas Ativas</h2>
-            {activePlants.length === 0 ? (
-              <EmptyState onAdd={() => setShowForm(true)} />
-            ) : (
-              <div className="space-y-2">
-                {activePlants.slice(0, 6).map(plant => (
-                  <PlantRow key={plant.id} plant={plant} onDelete={deletePlant} />
-                ))}
-                {activePlants.length > 6 && (
-                  <p className="text-center text-sm text-primary py-2">
-                    +{activePlants.length - 6} plantas
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
+        {/* Tabs */}
+        <div className="flex gap-2 mb-4">
+          <button onClick={() => setTab('plantas')}
+            className={`flex items-center gap-1.5 h-9 px-4 rounded-xl text-sm font-medium transition-all border ${tab === 'plantas' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
+            <Leaf className="w-3.5 h-3.5" /> Plantas Ativas
+          </button>
+          <button onClick={() => setTab('registros')}
+            className={`flex items-center gap-1.5 h-9 px-4 rounded-xl text-sm font-medium transition-all border ${tab === 'registros' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
+            <ClipboardList className="w-3.5 h-3.5" /> Registros
+          </button>
+        </div>
 
-          {/* Recent activity */}
+        {tab === 'plantas' && (
+          activePlants.length === 0 ? (
+            <EmptyState onAdd={() => setShowForm(true)} />
+          ) : (
+            <div className="space-y-2">
+              {activePlants.map(plant => (
+                <PlantRow key={plant.id} plant={plant} onDelete={deletePlant} />
+              ))}
+            </div>
+          )
+        )}
+
+        {tab === 'registros' && (
           <div>
             <h2 className="font-syne text-lg font-bold text-foreground mb-3">Atividade Recente</h2>
             {recentLogs.length === 0 ? (
@@ -91,13 +93,13 @@ export default function Home() {
               </div>
             ) : (
               <div className="space-y-2">
-                {recentLogs.map(log => (
+                {logs.map(log => (
                   <LogRow key={log.id} log={log} plants={plants} />
                 ))}
               </div>
             )}
           </div>
-        </div>
+        )}
       </div>
 
       {showForm && (
