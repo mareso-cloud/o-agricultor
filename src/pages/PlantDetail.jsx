@@ -251,7 +251,12 @@ export default function PlantDetail() {
               <LogTimeline logs={logs} />
             )}
             {tab === 'fotos' && (
-              <PlantGallery logs={photoLogs} plant={plant} onAddPhoto={() => openLogForm('foto')} />
+              <PlantGallery
+                logs={photoLogs}
+                plant={plant}
+                onAddPhoto={() => openLogForm('foto')}
+                onDeleteLog={(logId) => setLogs(prev => prev.filter(l => l.id !== logId))}
+              />
             )}
             {tab === 'graficos' && (
               <PlantCharts logs={logs} />
