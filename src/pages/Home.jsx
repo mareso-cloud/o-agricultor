@@ -35,7 +35,7 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <Header onNewPlant={() => setShowForm(true)} />
 
-      <main className="max-w-6xl mx-auto px-4 py-6">
+      <main className="max-w-6xl mx-auto px-4 py-6 hidden">
         {loading ?
         <div className="flex items-center justify-center py-32">
             <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
@@ -50,7 +50,7 @@ export default function Home() {
             {/* Search & Filter */}
             <div className="flex gap-3 mb-6">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Search className="lucide lucide-search absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground hidden" />
                 <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}

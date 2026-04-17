@@ -10,17 +10,17 @@ export default function Header({ onNewPlant }) {
             <Leaf className="w-5 h-5 text-primary" />
           </div>
           <div>
-            <h1 className="font-syne font-700 text-base text-foreground leading-none">O AG</h1>
+            <h1 className="font-syne font-700 text-base text-foreground leading-none">O AGRICULTOR
+</h1>
             <p className="text-xs text-muted-foreground leading-none mt-0.5">Cultivo Indoor</p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           <button className="w-9 h-9 rounded-lg border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-all">
-            <Bell className="w-4 h-4" />
+            <Bell className="lucide lucide-bell w-4 h-4 hidden" />
           </button>
-          <Button
-            onClick={onNewPlant} className="inline-flex items-center justify-center gap-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow py-2 h-9 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-medium text-sm rounded-xl glow-green transition-all hover:scale-105 hidden">
+          <Button onClick={onNewPlant} className="inline-flex items-center justify-center gap-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow py-2 h-9 px-4 bg-primary hover:bg-primary/90 text-primary-foreground font-medium text-sm rounded-xl glow-green transition-all hover:scale-105 hidden">
 
             
             <Plus className="w-4 h-4 mr-1.5" />
