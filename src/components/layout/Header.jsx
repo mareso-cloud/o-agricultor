@@ -10,7 +10,7 @@ export default function Header({ onNewPlant }) {
             <Leaf className="w-5 h-5 text-primary" />
           </div>
           <div>
-            <h1 className="font-syne font-700 text-base text-foreground leading-none">GreenLog Pro</h1>
+            <h1 className="font-syne font-700 text-base text-foreground leading-none">O AG</h1>
             <p className="text-xs text-muted-foreground leading-none mt-0.5">Cultivo Indoor</p>
           </div>
         </div>

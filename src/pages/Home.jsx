@@ -54,8 +54,8 @@ export default function Home() {
                 <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Buscar planta..."
-                className="w-full pl-9 pr-4 h-10 bg-card border border-border/60 rounded-xl text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 focus:border-primary/40" />
+                placeholder="Buscar planta..." className="w-full pl-9 pr-4 h-10 bg-card border border-border/60 rounded-xl text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 focus:border-primary/40 hidden" />
+              
               
               </div>
               <div className="flex gap-1.5">
