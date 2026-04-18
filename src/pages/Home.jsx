@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
-import { Leaf, Droplets, Plus, TrendingUp, ClipboardList, Trash2, FlaskConical } from 'lucide-react';
+import { Leaf, Droplets, Plus, ClipboardList, Trash2, FlaskConical, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { differenceInDays, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -10,6 +10,8 @@ import StagesBadge from '@/components/StagesBadge';
 import StatCard from '@/components/StatCard';
 import PlantForm from '@/components/plants/PlantForm';
 import CurePlants from '@/components/plants/CurePlants';
+import WateringsModal from '@/components/plants/WateringsModal';
+import RemindersTab from '@/components/plants/RemindersTab';
 
 export default function Home() {
   const [showForm, setShowForm] = useState(false);
@@ -37,6 +39,7 @@ export default function Home() {
   const recentLogs = logs.slice(0, 5);
   const today = format(new Date(), 'yyyy-MM-dd');
   const [showCure, setShowCure] = useState(false);
+  const [showWaterings, setShowWaterings] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
@@ -60,7 +63,9 @@ export default function Home() {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-3 mb-6">
           <StatCard icon={Leaf} label="Plantas Ativas" value={activePlants.length} color="green" />
-          <StatCard icon={Droplets} label="Regas Hoje" value={logs.filter(l => l.type === 'rega' && l.date === today).length} color="blue" />
+          <button onClick={() => setShowWaterings(true)} className="w-full text-left">
+            <StatCard icon={Droplets} label="Regas Hoje" value={logs.filter(l => l.type === 'rega' && l.date === today).length} color="blue" />
+          </button>
           <button onClick={() => setShowCure(true)} className="w-full text-left">
             <div className="rounded-xl border border-purple-500/30 bg-purple-500/10 p-4 h-full flex flex-col justify-between card-hover">
               <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center mb-2">
@@ -82,6 +87,10 @@ export default function Home() {
             className={`flex items-center gap-1.5 h-9 px-4 rounded-xl text-sm font-medium transition-all border ${tab === 'registros' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
             <ClipboardList className="w-3.5 h-3.5" /> Registros
           </button>
+          <button onClick={() => setTab('lembretes')}
+            className={`flex items-center gap-1.5 h-9 px-4 rounded-xl text-sm font-medium transition-all border ${tab === 'lembretes' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
+            <Bell className="w-3.5 h-3.5" /> Lembretes
+          </button>
         </div>
 
         {tab === 'plantas' && (
@@ -94,6 +103,10 @@ export default function Home() {
               ))}
             </div>
           )
+        )}
+
+        {tab === 'lembretes' && (
+          <RemindersTab plants={plants} />
         )}
 
         {tab === 'registros' && (
@@ -113,6 +126,10 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      {showWaterings && (
+        <WateringsModal logs={logs} plants={plants} onClose={() => setShowWaterings(false)} />
+      )}
 
       {showCure && (
         <CurePlants plants={curePlants} onClose={() => setShowCure(false)} onUpdate={() => queryClient.invalidateQueries({ queryKey: ['plants'] })} />

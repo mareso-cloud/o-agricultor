@@ -1,0 +1,44 @@
+{
+  "name": "Reminder",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "T\u00edtulo do lembrete"
+    },
+    "description": {
+      "type": "string",
+      "description": "Descri\u00e7\u00e3o detalhada do que fazer"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Data prevista"
+    },
+    "plant_id": {
+      "type": "string",
+      "description": "Planta relacionada (opcional)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "rega",
+        "nutri\u00e7\u00e3o",
+        "poda",
+        "defolia\u00e7\u00e3o",
+        "treinamento",
+        "transplante",
+        "medi\u00e7\u00e3o",
+        "outro"
+      ],
+      "default": "outro"
+    },
+    "done": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "title"
+  ]
+}
