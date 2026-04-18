@@ -31,7 +31,7 @@ export default function CurePanel({ plant, onClose, onUpdate }) {
 
   const handleFinalize = async () => {
     setSaving(true);
-    const notes = `🌾 COLHIDA\nRendimento real: ${form.actual_yield || '—'}g\nSecagem: ${form.dry_start_date || '—'} → ${dryEnd || '—'} (${form.dry_days} dias)\nCura: ${form.cure_start_date || '—'} → ${cureEnd || '—'} (${form.cure_weeks} semanas)\nLocal: ${form.cure_location || '—'}\nObs: ${form.notes}`;
+    const notes = `🌾 COLHIDA\nRendimento real: ${form.actual_yield || '—'}g\nSecagem: ${form.dry_start_date || '—'} (${form.dry_days} dias previstos)\nCura: ${form.cure_start_date || '—'} (${form.cure_weeks} semanas previstas)\nLocal: ${form.cure_location || '—'}\nObs: ${form.notes}`;
     const updated = await base44.entities.Plant.update(plant.id, {
       status: 'cura',
       stage: 'cura',

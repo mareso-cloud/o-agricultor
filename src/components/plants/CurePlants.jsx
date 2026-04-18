@@ -93,8 +93,16 @@ function CurePlantCard({ plant, onClose, onDelete }) {
 
           {(secagem || curaInfo || local) && (
             <div className="mt-2 space-y-0.5">
-              {secagem && <p className="text-sm text-muted-foreground">🌬️ Secagem: {secagem}</p>}
-              {curaInfo && <p className="text-sm text-muted-foreground">🫙 Cura: {curaInfo}</p>}
+              {secagem && (() => {
+                const startDate = secagem.split(' ')[0];
+                const days = startDate && startDate !== '—' ? differenceInDays(new Date(), new Date(startDate)) : null;
+                return <p className="text-sm text-muted-foreground">🌬️ Secagem: {days !== null ? `${days} dias` : secagem}</p>;
+              })()}
+              {curaInfo && (() => {
+                const startDate = curaInfo.split(' ')[0];
+                const days = startDate && startDate !== '—' ? differenceInDays(new Date(), new Date(startDate)) : null;
+                return <p className="text-sm text-muted-foreground">🫙 Cura: {days !== null ? `${days} dias` : curaInfo}</p>;
+              })()}
               {local && local !== '—' && <p className="text-sm text-muted-foreground">📍 {local}</p>}
             </div>
           )}
