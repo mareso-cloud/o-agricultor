@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 export default function CurePlants({ plants, onClose, onUpdate }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full sm:max-w-lg bg-card rounded-t-3xl sm:rounded-2xl border border-purple-500/40 animate-fade-in">
+      <div className="relative w-full max-w-lg bg-card rounded-2xl border border-purple-500/40 animate-fade-in">
         <div className="flex items-center justify-between p-5 border-b border-border/40">
           <div className="flex items-center gap-2">
             <FlaskConical className="w-5 h-5 text-purple-400" />
