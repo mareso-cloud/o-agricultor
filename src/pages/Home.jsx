@@ -196,18 +196,46 @@ function LogRow({ log, plants }) {
     'defoliação': '🍃', problema: '⚠️', colheita: '🌾',
   };
 
+  const tags = [];
+  if (log.ph_in) tags.push({ label: `pH↓ ${log.ph_in}`, color: 'bg-blue-500/15 text-blue-300 border-blue-500/25' });
+  if (log.ph_out) tags.push({ label: `pH↑ ${log.ph_out}`, color: 'bg-blue-400/15 text-blue-200 border-blue-400/25' });
+  if (log.ec_in) tags.push({ label: `EC↓ ${log.ec_in}`, color: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/25' });
+  if (log.ec_out) tags.push({ label: `EC↑ ${log.ec_out}`, color: 'bg-emerald-400/15 text-emerald-200 border-emerald-400/25' });
+  if (log.temp_air) tags.push({ label: `🌡 ${log.temp_air}°C`, color: 'bg-orange-500/15 text-orange-300 border-orange-500/25' });
+  if (log.humidity) tags.push({ label: `💧 ${log.humidity}%`, color: 'bg-sky-500/15 text-sky-300 border-sky-500/25' });
+  if (log.lux) tags.push({ label: `💡 ${log.lux}µmol`, color: 'bg-yellow-500/15 text-yellow-300 border-yellow-500/25' });
+  if (log.height_cm) tags.push({ label: `📏 ${log.height_cm}cm`, color: 'bg-purple-500/15 text-purple-300 border-purple-500/25' });
+  if (log.water_ml) tags.push({ label: `💦 ${log.water_ml}ml`, color: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/25' });
+
   return (
-    <div className="flex items-center gap-3 p-4 rounded-2xl border border-border/50 bg-card">
-      <div className="w-9 h-9 rounded-xl bg-muted border border-border/40 flex items-center justify-center text-base flex-shrink-0">
-        {typeEmoji[log.type] || '📝'}
+    <div className="p-4 rounded-2xl border border-border/50 bg-card">
+      <div className="flex items-center gap-3">
+        <div className="w-9 h-9 rounded-xl bg-muted border border-border/40 flex items-center justify-center text-base flex-shrink-0">
+          {typeEmoji[log.type] || '📝'}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium capitalize text-foreground">{log.type}</p>
+            <span className="text-xs text-muted-foreground ml-2 flex-shrink-0">
+              {log.date ? format(new Date(log.date), 'dd/MM') : ''}
+            </span>
+          </div>
+          <p className="text-xs text-muted-foreground">{plant?.name || 'Planta'}</p>
+        </div>
       </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium capitalize text-foreground">{log.type}</p>
-        <p className="text-xs text-muted-foreground truncate">{plant?.name || 'Planta'}</p>
-      </div>
-      <span className="text-xs text-muted-foreground">
-        {log.date ? format(new Date(log.date), 'dd/MM') : ''}
-      </span>
+      {tags.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mt-2 ml-12">
+          {tags.map((t, i) => (
+            <span key={i} className={`text-xs px-2 py-0.5 rounded-full border ${t.color}`}>{t.label}</span>
+          ))}
+        </div>
+      )}
+      {log.notes && (
+        <p className="text-xs text-muted-foreground mt-1.5 ml-12 line-clamp-2">{log.notes}</p>
+      )}
+      {log.nutrients_used && (
+        <p className="text-xs text-primary/70 mt-1 ml-12 line-clamp-1">🧪 {log.nutrients_used}</p>
+      )}
     </div>
   );
 }

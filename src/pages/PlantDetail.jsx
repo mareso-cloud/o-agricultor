@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Droplets, BarChart2, Camera, Settings, Activity, Bell } from 'lucide-react';
+import { ArrowLeft, Plus, Droplets, BarChart2, Camera, Settings, Activity, Bell, FlaskConical } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { differenceInDays, formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -72,13 +72,13 @@ export default function PlantDetail() {
   const lastHumidity = logs.find(l => l.humidity);
   const lastVpd = logs.find(l => l.vpd);
 
-  const handleQuickWater = async () => {
+  const handleQuickWater = async (withNutrients = false) => {
     setWateringNow(true);
     const log = await base44.entities.Log.create({
       plant_id: id,
-      type: 'rega',
+      type: withNutrients ? 'nutrição' : 'rega',
       date: new Date().toISOString().split('T')[0],
-      notes: 'Rega rápida',
+      notes: withNutrients ? 'Rega com fertilizante' : 'Rega com água',
     });
     setLogs(prev => [log, ...prev]);
     setWateringNow(false);
@@ -150,28 +150,27 @@ export default function PlantDetail() {
 
           {/* Water Alert Banner */}
           {needsWater && (
-            <div className="mt-4 flex items-center gap-3 p-3 rounded-xl bg-orange-500/10 border border-orange-500/25">
+            <div className="mt-3 flex items-center gap-3 p-3 rounded-xl bg-orange-500/10 border border-orange-500/25">
               <Bell className="w-4 h-4 text-orange-400 flex-shrink-0" />
               <p className="text-sm text-orange-300 flex-1">
                 {lastWaterDays === null ? 'Nenhuma rega registrada ainda' : `Última rega há ${lastWaterDays} dia${lastWaterDays > 1 ? 's' : ''} — hora de regar!`}
               </p>
-              <button onClick={handleQuickWater} disabled={wateringNow}
-                className="flex-shrink-0 text-xs px-3 py-1.5 rounded-lg bg-orange-500/20 border border-orange-500/40 text-orange-300 hover:bg-orange-500/30 transition-all font-medium">
-                {wateringNow ? '...' : 'Regar agora'}
-              </button>
             </div>
           )}
 
-          {/* Quick Water Button (always visible below alert) */}
-          {!needsWater && (
-            <div className="mt-4 flex gap-2">
-              <button onClick={handleQuickWater} disabled={wateringNow}
-                className="flex items-center gap-2 h-9 px-4 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-400 text-sm font-medium hover:bg-blue-500/25 transition-all">
-                <Droplets className="w-4 h-4" />
-                {wateringNow ? 'Regando...' : 'Registrar Rega'}
-              </button>
-            </div>
-          )}
+          {/* Quick Water Buttons — always visible */}
+          <div className="mt-3 flex gap-2">
+            <button onClick={() => handleQuickWater(false)} disabled={wateringNow}
+              className="flex items-center gap-1.5 h-9 px-3 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-300 text-xs font-medium hover:bg-blue-500/25 transition-all">
+              <Droplets className="w-3.5 h-3.5" />
+              Rega com Água
+            </button>
+            <button onClick={() => handleQuickWater(true)} disabled={wateringNow}
+              className="flex items-center gap-1.5 h-9 px-3 rounded-xl bg-primary/15 border border-primary/30 text-primary text-xs font-medium hover:bg-primary/25 transition-all">
+              <FlaskConical className="w-3.5 h-3.5" />
+              Rega com Fertilizante
+            </button>
+          </div>
         </div>
 
         {/* Status Grid */}
