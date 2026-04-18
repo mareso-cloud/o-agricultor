@@ -49,16 +49,9 @@ export default function Home() {
   const [showSettings, setShowSettings] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Background image - static, only on Home */}
-      <img
-        src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/7c6defedf_4759230.jpg"
-        alt=""
-        className="fixed inset-0 w-full h-full object-cover pointer-events-none"
-        style={{ opacity: 0.08, zIndex: 0 }}
-      />
+    <div className="min-h-screen bg-background">
       <PullToRefresh onRefresh={handleRefresh}>
-      <div className="max-w-4xl mx-auto px-4 py-6 relative" style={{ zIndex: 1 }}>
+      <div className="max-w-4xl mx-auto px-4 py-6">
         {/* Hero */}
         <div className="mb-6">
           {/* Top bar: ET logo left | Settings right */}
