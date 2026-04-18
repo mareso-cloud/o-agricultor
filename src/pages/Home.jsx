@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
-import { Leaf, Droplets, Plus, ClipboardList, Trash2, FlaskConical, Bell } from 'lucide-react';
+import { Leaf, Droplets, Plus, ClipboardList, Trash2, FlaskConical, Bell, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { differenceInDays, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -12,7 +12,8 @@ import CurePlants from '@/components/plants/CurePlants';
 import WateringsModal from '@/components/plants/WateringsModal';
 import RemindersTab from '@/components/plants/RemindersTab';
 import PullToRefresh from '@/components/PullToRefresh';
-import DeleteAccountDialog from '@/components/DeleteAccountDialog';
+import EtLogo from '@/components/EtLogo';
+import SettingsModal from '@/components/SettingsModal';
 
 export default function Home() {
   const [showForm, setShowForm] = useState(false);
@@ -45,25 +46,36 @@ export default function Home() {
   const today = format(new Date(), 'yyyy-MM-dd');
   const [showCure, setShowCure] = useState(false);
   const [showWaterings, setShowWaterings] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
       <PullToRefresh onRefresh={handleRefresh}>
       <div className="max-w-4xl mx-auto px-4 py-6">
         {/* Hero */}
-        <div className="mb-6 flex items-end justify-between">
-          <div>
-            <p className="text-muted-foreground text-sm mb-1">
-              {format(new Date(), "EEEE, d 'de' MMMM", { locale: ptBR })}
-            </p>
-            <h1 className="font-syne text-3xl font-bold text-foreground">
-              Seu <span className="text-primary">Jardim</span>
-            </h1>
+        <div className="mb-6">
+          {/* Top bar: ET logo left | Settings right */}
+          <div className="flex items-center justify-between mb-3">
+            <EtLogo size={42} />
+            <button onClick={() => setShowSettings(true)}
+              className="w-9 h-9 rounded-xl border border-primary/40 bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-all glow-green">
+              <Settings className="w-4 h-4" />
+            </button>
           </div>
-          <Button onClick={() => setShowForm(true)} className="bg-primary hover:bg-primary/90 gap-2 glow-green">
-            <Plus className="w-4 h-4" />
-            <span className="hidden sm:inline">Nova Planta</span>
-          </Button>
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-muted-foreground text-sm mb-1">
+                {format(new Date(), "EEEE, d 'de' MMMM", { locale: ptBR })}
+              </p>
+              <h1 className="font-syne text-3xl font-bold text-foreground">
+                Seu <span className="text-primary">Jardim</span>
+              </h1>
+            </div>
+            <Button onClick={() => setShowForm(true)} className="bg-primary hover:bg-primary/90 gap-2 glow-green">
+              <Plus className="w-4 h-4" />
+              <span className="hidden sm:inline">Nova Planta</span>
+            </Button>
+          </div>
         </div>
 
         {/* Stats */}
@@ -157,7 +169,7 @@ export default function Home() {
         />
       )}
 
-      <DeleteAccountDialog />
+      {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
     </div>
   );
 }
