@@ -55,7 +55,7 @@ export default function Home() {
         src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/7c6defedf_4759230.jpg"
         alt=""
         className="fixed inset-0 w-full h-full object-cover pointer-events-none"
-        style={{ opacity: 0.07, zIndex: 0 }}
+        style={{ opacity: 0.04, zIndex: 0 }}
       />
       <PullToRefresh onRefresh={handleRefresh}>
       <div className="max-w-4xl mx-auto px-4 py-6 relative" style={{ zIndex: 1 }}>
