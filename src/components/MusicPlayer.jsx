@@ -17,87 +17,79 @@ function shuffle(arr) {
   return a;
 }
 
-// Global singleton — evita múltiplos players ao navegar entre páginas
-let globalPlayer = null;
-let globalReady = false;
-let globalPlaying = false;
-let globalQueue = shuffle(PLAYLIST);
-let globalIndex = 0;
-let setPlayingGlobal = null;
+// Singleton global — sobrevive entre navegações de página
+let _player = null;
+let _ready = false;
+let _queue = shuffle(PLAYLIST);
+let _index = 0;
+let _isPlaying = false;
 
 export default function MusicPlayer() {
-  const [playing, setPlaying] = useState(globalPlaying);
-  const containerRef = useRef(null);
-
-  setPlayingGlobal = setPlaying;
-
-  const loadNext = () => {
-    globalIndex = (globalIndex + 1) % globalQueue.length;
-    if (globalIndex === 0) globalQueue = shuffle(PLAYLIST);
-    if (globalPlayer && globalReady) {
-      globalPlayer.loadVideoById(globalQueue[globalIndex]);
-    }
-  };
+  const [playing, setPlaying] = useState(_isPlaying);
+  const divRef = useRef(null);
 
   useEffect(() => {
-    // Se já existe um player global, não cria outro
-    if (globalPlayer) return;
+    // Já existe player global, apenas sincroniza o estado
+    if (_player) {
+      setPlaying(_isPlaying);
+      return;
+    }
 
     const initPlayer = () => {
-      if (globalPlayer) return; // dupla guarda
-      const div = document.createElement('div');
-      div.style.cssText = 'position:fixed;bottom:-1px;right:-1px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;';
-      const inner = document.createElement('div');
-      div.appendChild(inner);
-      document.body.appendChild(div);
-
-      globalPlayer = new window.YT.Player(inner, {
-        videoId: globalQueue[0],
+      if (_player) return;
+      _player = new window.YT.Player(divRef.current, {
+        videoId: _queue[_index],
         playerVars: { autoplay: 1, controls: 0, modestbranding: 1, rel: 0 },
         events: {
           onReady: (e) => {
-            globalReady = true;
+            _ready = true;
             e.target.playVideo();
-            globalPlaying = true;
-            setPlayingGlobal?.(true);
+            _isPlaying = true;
+            setPlaying(true);
           },
           onStateChange: (e) => {
-            if (e.data === window.YT.PlayerState.ENDED) loadNext();
+            if (e.data === window.YT.PlayerState.ENDED) {
+              _index = (_index + 1) % _queue.length;
+              if (_index === 0) _queue = shuffle(PLAYLIST);
+              _player.loadVideoById(_queue[_index]);
+            }
           },
         },
       });
     };
 
     if (!window.YT) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      document.head.appendChild(tag);
+      if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.head.appendChild(tag);
+      }
       window.onYouTubeIframeAPIReady = initPlayer;
     } else if (window.YT.Player) {
       initPlayer();
     } else {
       window.onYouTubeIframeAPIReady = initPlayer;
     }
-
-    // Não destrói no cleanup — player permanece vivo entre navegações
   }, []);
 
   const toggle = () => {
-    if (!globalPlayer || !globalReady) return;
+    if (!_player || !_ready) return;
     if (playing) {
-      globalPlayer.pauseVideo();
-      globalPlaying = false;
+      _player.pauseVideo();
+      _isPlaying = false;
       setPlaying(false);
     } else {
-      globalPlayer.playVideo();
-      globalPlaying = true;
+      _player.playVideo();
+      _isPlaying = true;
       setPlaying(true);
     }
   };
 
   return (
     <>
-      {/* Single mute/play button */}
+      <div className="fixed -bottom-[1px] -right-[1px] w-1 h-1 overflow-hidden opacity-0 pointer-events-none">
+        <div ref={divRef} />
+      </div>
       <button
         onClick={toggle}
         title={playing ? 'Silenciar música' : 'Tocar música'}
