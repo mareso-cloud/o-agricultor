@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Save } from 'lucide-react';
+import { Save, FlaskConical } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { base44 } from '@/api/base44Client';
+import CurePanel from './CurePanel';
 
 const stages = ['germinação', 'muda', 'vegetativo', 'floração', 'colheita', 'cura'];
 const mediums = ['terra', 'coco', 'hidroponia', 'aeroponia', 'soilless'];
@@ -14,6 +15,7 @@ export default function PlantConfig({ plant, onUpdate }) {
   const [form, setForm] = useState({ ...plant });
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [showCure, setShowCure] = useState(false);
 
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
 
@@ -85,11 +87,26 @@ export default function PlantConfig({ plant, onUpdate }) {
           placeholder="Notas gerais..." />
       </Field>
 
-      <button onClick={handleSave} disabled={saving}
-        className="flex items-center gap-2 h-10 px-5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-all glow-green">
-        <Save className="w-4 h-4" />
-        {saved ? 'Salvo!' : saving ? 'Salvando...' : 'Salvar alterações'}
-      </button>
+      <div className="flex flex-wrap gap-3">
+        <button onClick={handleSave} disabled={saving}
+          className="flex items-center gap-2 h-10 px-5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-all glow-green">
+          <Save className="w-4 h-4" />
+          {saved ? 'Salvo!' : saving ? 'Salvando...' : 'Salvar alterações'}
+        </button>
+        <button onClick={() => setShowCure(true)}
+          className="flex items-center gap-2 h-10 px-5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold transition-all shadow-lg">
+          <FlaskConical className="w-4 h-4" />
+          Finalizar Cultivo
+        </button>
+      </div>
+
+      {showCure && (
+        <CurePanel
+          plant={plant}
+          onClose={() => setShowCure(false)}
+          onUpdate={(updated) => { onUpdate(updated); setShowCure(false); }}
+        />
+      )}
     </div>
   );
 }

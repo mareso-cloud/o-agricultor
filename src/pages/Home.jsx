@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
-import { Leaf, Droplets, Plus, TrendingUp, ClipboardList, Trash2 } from 'lucide-react';
+import { Leaf, Droplets, Plus, TrendingUp, ClipboardList, Trash2, FlaskConical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { differenceInDays, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import StagesBadge from '@/components/StagesBadge';
 import StatCard from '@/components/StatCard';
 import PlantForm from '@/components/plants/PlantForm';
+import CurePlants from '@/components/plants/CurePlants';
 
 export default function Home() {
   const [showForm, setShowForm] = useState(false);
@@ -31,9 +32,11 @@ export default function Home() {
     queryFn: () => base44.entities.Log.list('-date', 50),
   });
 
-  const activePlants = plants.filter(p => p.status !== 'perdida' && p.status !== 'colhida');
+  const activePlants = plants.filter(p => p.status !== 'perdida' && p.status !== 'colhida' && p.status !== 'cura');
+  const curePlants = plants.filter(p => p.status === 'cura');
   const recentLogs = logs.slice(0, 5);
   const today = format(new Date(), 'yyyy-MM-dd');
+  const [showCure, setShowCure] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
@@ -55,9 +58,18 @@ export default function Home() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="grid grid-cols-3 gap-3 mb-6">
           <StatCard icon={Leaf} label="Plantas Ativas" value={activePlants.length} color="green" />
           <StatCard icon={Droplets} label="Regas Hoje" value={logs.filter(l => l.type === 'rega' && l.date === today).length} color="blue" />
+          <button onClick={() => setShowCure(true)} className="w-full text-left">
+            <div className="rounded-xl border border-purple-500/30 bg-purple-500/10 p-4 h-full flex flex-col justify-between card-hover">
+              <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center mb-2">
+                <FlaskConical className="w-4 h-4 text-purple-400" />
+              </div>
+              <p className="text-2xl font-bold text-purple-300">{curePlants.length}</p>
+              <p className="text-xs text-purple-400/80 mt-1">Plantas na Cura</p>
+            </div>
+          </button>
         </div>
 
         {/* Tabs */}
@@ -101,6 +113,10 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      {showCure && (
+        <CurePlants plants={curePlants} onClose={() => setShowCure(false)} onUpdate={() => queryClient.invalidateQueries({ queryKey: ['plants'] })} />
+      )}
 
       {showForm && (
         <PlantForm
