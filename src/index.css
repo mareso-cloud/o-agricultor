@@ -43,8 +43,9 @@
   }
 
   body {
-    @apply bg-background text-foreground font-inter;
+    @apply text-foreground font-inter;
     font-family: var(--font-inter);
+    background: transparent;
   }
 
   h1, h2, h3 {

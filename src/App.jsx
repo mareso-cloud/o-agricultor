@@ -69,7 +69,7 @@ function App() {
             src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/7c6defedf_4759230.jpg"
             alt=""
             className="w-full h-full object-cover"
-            style={{ opacity: 0.10 }}
+            style={{ opacity: 0.35 }}
           />
         </div>
         <div className="relative" style={{ zIndex: 1 }}>
