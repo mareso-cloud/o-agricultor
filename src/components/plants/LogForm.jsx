@@ -27,7 +27,7 @@ export default function LogForm({ plantId, onClose, onSave, initialType = 'obser
     ec_in: '', ec_out: '',
     water_ml: '', runoff_ml: '',
     temp_air: '', humidity: '', vpd: '', co2: '',
-    height_cm: '',
+    height_cm: '', lux: '',
     photo_url: '', photo_label: '',
     nutrients_used: '',
     pest_disease: '', solution_applied: '',
@@ -54,7 +54,7 @@ export default function LogForm({ plantId, onClose, onSave, initialType = 'obser
   const handleSave = async () => {
     setSaving(true);
     const data = { ...form };
-    const numFields = ['ph_in', 'ph_out', 'ec_in', 'ec_out', 'water_ml', 'runoff_ml', 'temp_air', 'humidity', 'vpd', 'co2', 'height_cm'];
+    const numFields = ['ph_in', 'ph_out', 'ec_in', 'ec_out', 'water_ml', 'runoff_ml', 'temp_air', 'humidity', 'vpd', 'co2', 'height_cm', 'lux'];
     numFields.forEach(k => {
       if (data[k] === '' || data[k] === undefined) delete data[k];
       else data[k] = Number(data[k]);
@@ -151,7 +151,7 @@ export default function LogForm({ plantId, onClose, onSave, initialType = 'obser
               <Input type="number" value={form.humidity} onChange={e => set('humidity', e.target.value)} placeholder="55" className="bg-input border-border/60 rounded-xl h-10 text-sm" />
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             <div>
               <Label className="text-xs text-muted-foreground mb-1.5 block">VPD (kPa)</Label>
               <Input type="number" step="0.01" value={form.vpd} onChange={e => set('vpd', e.target.value)} placeholder="1.0" className="bg-input border-border/60 rounded-xl h-10 text-sm" />
@@ -159,6 +159,12 @@ export default function LogForm({ plantId, onClose, onSave, initialType = 'obser
             <div>
               <Label className="text-xs text-muted-foreground mb-1.5 block">CO2 (ppm)</Label>
               <Input type="number" value={form.co2} onChange={e => set('co2', e.target.value)} placeholder="800" className="bg-input border-border/60 rounded-xl h-10 text-sm" />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label className="text-xs text-muted-foreground mb-1.5 block">PPFD (µmol)</Label>
+              <Input type="number" value={form.lux} onChange={e => set('lux', e.target.value)} placeholder="600" className="bg-input border-border/60 rounded-xl h-10 text-sm" />
             </div>
             <div>
               <Label className="text-xs text-muted-foreground mb-1.5 block">Altura (cm)</Label>
