@@ -65,11 +65,12 @@ function App() {
           className="fixed inset-0 pointer-events-none"
           style={{ zIndex: 0 }}
         >
+          <div className="absolute inset-0 bg-background" />
           <img
             src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/7c6defedf_4759230.jpg"
             alt=""
-            className="w-full h-full object-cover"
-            style={{ opacity: 0.35 }}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ opacity: 0.08 }}
           />
         </div>
         <div className="relative" style={{ zIndex: 1 }}>
