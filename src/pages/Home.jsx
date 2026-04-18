@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { differenceInDays, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import StagesBadge from '@/components/StagesBadge';
-import StatCard from '@/components/StatCard';
 import PlantForm from '@/components/plants/PlantForm';
 import CurePlants from '@/components/plants/CurePlants';
 import WateringsModal from '@/components/plants/WateringsModal';
@@ -61,10 +60,15 @@ export default function Home() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-3 mb-6">
-          <StatCard icon={Leaf} label="Plantas Ativas" value={activePlants.length} color="green" />
+        <div className="grid grid-cols-2 gap-3 mb-6">
           <button onClick={() => setShowWaterings(true)} className="w-full text-left">
-            <StatCard icon={Droplets} label="Regas Hoje" value={logs.filter(l => l.type === 'rega' && l.date === today).length} color="blue" />
+            <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-4 h-full flex flex-col justify-between card-hover">
+              <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center mb-2">
+                <Droplets className="w-4 h-4 text-blue-400" />
+              </div>
+              <p className="text-2xl font-bold text-blue-300">{logs.filter(l => l.type === 'rega' && l.date === today).length}</p>
+              <p className="text-xs text-blue-400/80 mt-1">Regas Hoje</p>
+            </div>
           </button>
           <button onClick={() => setShowCure(true)} className="w-full text-left">
             <div className="rounded-xl border border-purple-500/30 bg-purple-500/10 p-4 h-full flex flex-col justify-between card-hover">
