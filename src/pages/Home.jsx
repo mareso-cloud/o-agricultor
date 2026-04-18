@@ -56,7 +56,7 @@ export default function Home() {
         <div className="mb-6">
           {/* Top bar: ET logo left | Settings right */}
           <div className="flex items-center justify-between mb-3">
-            <EtLogo size={42} />
+            <EtLogo size={56} />
             <button onClick={() => setShowSettings(true)}
               className="w-9 h-9 rounded-xl border border-primary/40 bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-all glow-green">
               <Settings className="w-4 h-4" />

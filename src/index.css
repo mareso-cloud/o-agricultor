@@ -81,10 +81,30 @@
   }
 }
 
-/* iOS / Mobile */
+/* Global background */
 body {
   overscroll-behavior-y: none;
   -webkit-overflow-scrolling: touch;
+  background-image: url('https://media.base44.com/images/public/69e1684117e402d8da5bfd05/7c6defedf_4759230.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* Dark overlay so bg is very subtle */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: hsl(150 20% 6% / 0.88);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
 }
 
 button, a, [role="button"], nav {
