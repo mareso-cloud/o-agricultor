@@ -17,46 +17,52 @@ function shuffle(arr) {
   return a;
 }
 
+// Global singleton — evita múltiplos players ao navegar entre páginas
+let globalPlayer = null;
+let globalReady = false;
+let globalPlaying = false;
+let globalQueue = shuffle(PLAYLIST);
+let globalIndex = 0;
+let setPlayingGlobal = null;
+
 export default function MusicPlayer() {
-  const [playing, setPlaying] = useState(false);
-  const playerRef = useRef(null);
+  const [playing, setPlaying] = useState(globalPlaying);
   const containerRef = useRef(null);
-  const readyRef = useRef(false);
-  const queueRef = useRef(shuffle(PLAYLIST));
-  const indexRef = useRef(0);
+
+  setPlayingGlobal = setPlaying;
 
   const loadNext = () => {
-    indexRef.current = (indexRef.current + 1) % queueRef.current.length;
-    // Re-shuffle when we've gone through all tracks
-    if (indexRef.current === 0) {
-      queueRef.current = shuffle(PLAYLIST);
-    }
-    const player = playerRef.current;
-    if (player && readyRef.current) {
-      player.loadVideoById(queueRef.current[indexRef.current]);
+    globalIndex = (globalIndex + 1) % globalQueue.length;
+    if (globalIndex === 0) globalQueue = shuffle(PLAYLIST);
+    if (globalPlayer && globalReady) {
+      globalPlayer.loadVideoById(globalQueue[globalIndex]);
     }
   };
 
   useEffect(() => {
+    // Se já existe um player global, não cria outro
+    if (globalPlayer) return;
+
     const initPlayer = () => {
-      playerRef.current = new window.YT.Player(containerRef.current, {
-        videoId: queueRef.current[0],
-        playerVars: {
-          autoplay: 1,
-          controls: 0,
-          modestbranding: 1,
-          rel: 0,
-        },
+      if (globalPlayer) return; // dupla guarda
+      const div = document.createElement('div');
+      div.style.cssText = 'position:fixed;bottom:-1px;right:-1px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;';
+      const inner = document.createElement('div');
+      div.appendChild(inner);
+      document.body.appendChild(div);
+
+      globalPlayer = new window.YT.Player(inner, {
+        videoId: globalQueue[0],
+        playerVars: { autoplay: 1, controls: 0, modestbranding: 1, rel: 0 },
         events: {
           onReady: (e) => {
-            readyRef.current = true;
+            globalReady = true;
             e.target.playVideo();
-            setPlaying(true);
+            globalPlaying = true;
+            setPlayingGlobal?.(true);
           },
           onStateChange: (e) => {
-            if (e.data === window.YT.PlayerState.ENDED) {
-              loadNext();
-            }
+            if (e.data === window.YT.PlayerState.ENDED) loadNext();
           },
         },
       });
@@ -73,34 +79,24 @@ export default function MusicPlayer() {
       window.onYouTubeIframeAPIReady = initPlayer;
     }
 
-    return () => {
-      if (playerRef.current) {
-        playerRef.current.destroy();
-        playerRef.current = null;
-        readyRef.current = false;
-      }
-    };
+    // Não destrói no cleanup — player permanece vivo entre navegações
   }, []);
 
   const toggle = () => {
-    const player = playerRef.current;
-    if (!player || !readyRef.current) return;
+    if (!globalPlayer || !globalReady) return;
     if (playing) {
-      player.pauseVideo();
+      globalPlayer.pauseVideo();
+      globalPlaying = false;
       setPlaying(false);
     } else {
-      player.playVideo();
+      globalPlayer.playVideo();
+      globalPlaying = true;
       setPlaying(true);
     }
   };
 
   return (
     <>
-      {/* Hidden YouTube player */}
-      <div className="fixed -bottom-[1px] -right-[1px] w-1 h-1 overflow-hidden opacity-0 pointer-events-none">
-        <div ref={containerRef} />
-      </div>
-
       {/* Single mute/play button */}
       <button
         onClick={toggle}
