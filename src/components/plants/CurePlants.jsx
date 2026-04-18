@@ -95,7 +95,9 @@ function CurePlantCard({ plant, onClose, onDelete }) {
             <div className="mt-2 space-y-0.5">
               {secagem && (() => {
                 const startDate = secagem.split(' ')[0];
-                const days = startDate && startDate !== '—' ? differenceInDays(new Date(), new Date(startDate)) : null;
+                const cureStartDate = curaInfo ? curaInfo.split(' ')[0] : null;
+                const endRef = cureStartDate && cureStartDate !== '—' ? new Date(cureStartDate) : new Date();
+                const days = startDate && startDate !== '—' ? differenceInDays(endRef, new Date(startDate)) : null;
                 return <p className="text-sm text-muted-foreground">🌬️ Secagem: {days !== null ? `${days} dias` : secagem}</p>;
               })()}
               {curaInfo && (() => {
