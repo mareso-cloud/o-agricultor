@@ -57,15 +57,28 @@ const AuthenticatedApp = () => {
 
 
 function App() {
-
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>
-        <Router>
-          <AuthenticatedApp />
-        </Router>
-        <MusicPlayer />
-        <Toaster />
+        {/* Global background */}
+        <div
+          className="fixed inset-0 pointer-events-none"
+          style={{ zIndex: 0 }}
+        >
+          <img
+            src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/7c6defedf_4759230.jpg"
+            alt=""
+            className="w-full h-full object-cover"
+            style={{ opacity: 0.10 }}
+          />
+        </div>
+        <div className="relative" style={{ zIndex: 1 }}>
+          <Router>
+            <AuthenticatedApp />
+          </Router>
+          <MusicPlayer />
+          <Toaster />
+        </div>
       </QueryClientProvider>
     </AuthProvider>
   )
