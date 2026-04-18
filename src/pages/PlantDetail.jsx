@@ -66,6 +66,9 @@ export default function PlantDetail() {
   // Last measurements
   const lastMeasure = logs.find(l => l.ph_in || l.ph || l.temp_air || l.temp);
   const lastHeight = logs.find(l => l.height_cm);
+  const lastLux = logs.find(l => l.lux);
+  const lastHumidity = logs.find(l => l.humidity);
+  const lastVpd = logs.find(l => l.vpd);
 
   const handleQuickWater = async () => {
     setWateringNow(true);
@@ -212,7 +215,7 @@ export default function PlantDetail() {
             />
             <StatusCard
               icon="💡" label="PPFD"
-              value={lastMeasure?.lux ? `${lastMeasure.lux} µmol` : '—'}
+              value={lastLux?.lux ? `${lastLux.lux} µmol` : '—'}
             />
             <StatusCard
               icon="🌡️" label="Temperatura"
@@ -220,11 +223,11 @@ export default function PlantDetail() {
             />
             <StatusCard
               icon="💨" label="Umidade (UR)"
-              value={lastMeasure?.humidity ? `${lastMeasure.humidity}%` : '—'}
+              value={lastHumidity?.humidity ? `${lastHumidity.humidity}%` : '—'}
             />
             <StatusCard
               icon="🌫️" label="VPD"
-              value={lastMeasure?.vpd ? `${lastMeasure.vpd} kPa` : '—'}
+              value={lastVpd?.vpd ? `${lastVpd.vpd} kPa` : '—'}
             />
           </div>
         </div>
