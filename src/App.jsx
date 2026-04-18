@@ -1,10 +1,11 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
+import { AnimatePresence, motion } from 'framer-motion';
 // Add page imports here
 import Home from './pages/Home';
 import PlantDetail from './pages/PlantDetail';
@@ -34,12 +35,23 @@ const AuthenticatedApp = () => {
   }
 
   // Render the main app
+  const location = useLocation();
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/plant/:id" element={<PlantDetail />} />
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, x: 24 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -24 }}
+        transition={{ duration: 0.2, ease: 'easeInOut' }}
+      >
+        <Routes location={location}>
+          <Route path="/" element={<Home />} />
+          <Route path="/plant/:id" element={<PlantDetail />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

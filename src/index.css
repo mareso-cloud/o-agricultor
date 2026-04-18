@@ -81,6 +81,21 @@
   }
 }
 
+/* iOS / Mobile */
+body {
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+button, a, [role="button"], nav {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Safe area padding helpers */
+.safe-top    { padding-top: env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: hsl(var(--background)); }

@@ -11,6 +11,8 @@ import PlantForm from '@/components/plants/PlantForm';
 import CurePlants from '@/components/plants/CurePlants';
 import WateringsModal from '@/components/plants/WateringsModal';
 import RemindersTab from '@/components/plants/RemindersTab';
+import PullToRefresh from '@/components/PullToRefresh';
+import DeleteAccountDialog from '@/components/DeleteAccountDialog';
 
 export default function Home() {
   const [showForm, setShowForm] = useState(false);
@@ -21,6 +23,10 @@ export default function Home() {
     queryKey: ['plants'],
     queryFn: () => base44.entities.Plant.list('-created_date'),
   });
+
+  const handleRefresh = async () => {
+    await queryClient.invalidateQueries();
+  };
 
   const deletePlant = async (id) => {
     if (!confirm('Apagar esta planta definitivamente?')) return;
@@ -42,6 +48,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
+      <PullToRefresh onRefresh={handleRefresh}>
       <div className="max-w-4xl mx-auto px-4 py-6">
         {/* Hero */}
         <div className="mb-6 flex items-end justify-between">
@@ -131,6 +138,9 @@ export default function Home() {
         )}
       </div>
 
+      </div>
+      </PullToRefresh>
+
       {showWaterings && (
         <WateringsModal logs={logs} plants={plants} onClose={() => setShowWaterings(false)} />
       )}
@@ -148,6 +158,8 @@ export default function Home() {
           }}
         />
       )}
+
+      <DeleteAccountDialog />
     </div>
   );
 }

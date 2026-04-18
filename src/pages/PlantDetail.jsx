@@ -106,7 +106,7 @@ export default function PlantDetail() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Top Bar */}
-      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border/40 px-4 h-14 flex items-center justify-between">
+      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border/40 px-4 h-14 flex items-center justify-between safe-top">
         <button onClick={() => navigate('/')} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="w-4 h-4" /> Voltar
         </button>
