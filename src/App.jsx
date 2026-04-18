@@ -8,6 +8,7 @@ import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 // Add page imports here
 import Home from './pages/Home';
 import PlantDetail from './pages/PlantDetail';
+import MusicPlayer from './components/MusicPlayer';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -51,6 +52,7 @@ function App() {
         <Router>
           <AuthenticatedApp />
         </Router>
+        <MusicPlayer />
         <Toaster />
       </QueryClientProvider>
     </AuthProvider>
