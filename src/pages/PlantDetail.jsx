@@ -9,6 +9,7 @@ import LogForm from '@/components/plants/LogForm';
 import PlantGallery from '@/components/plants/PlantGallery';
 import PlantCharts from '@/components/plants/PlantCharts';
 import PlantConfig from '@/components/plants/PlantConfig';
+import StatusEditor from '@/components/plants/StatusEditor';
 
 const stageLabel = {
   germinacao: 'Germinação', germinação: 'Germinação',
@@ -39,6 +40,7 @@ export default function PlantDetail() {
   const [tab, setTab] = useState('logs');
   const [waterAlert, setWaterAlert] = useState(false);
   const [wateringNow, setWateringNow] = useState(false);
+  const [showStatusEditor, setShowStatusEditor] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -174,9 +176,15 @@ export default function PlantDetail() {
 
         {/* Status Grid */}
         <div className="rounded-2xl border border-border/50 bg-card p-5">
-          <div className="flex items-center gap-2 mb-4">
-            <Activity className="w-4 h-4 text-primary" />
-            <h2 className="font-syne font-semibold text-foreground">Status Atual</h2>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Activity className="w-4 h-4 text-primary" />
+              <h2 className="font-syne font-semibold text-foreground">Status Atual</h2>
+            </div>
+            <button onClick={() => setShowStatusEditor(true)}
+              className="text-xs px-3 py-1.5 rounded-xl border border-primary/40 text-primary bg-primary/10 hover:bg-primary/20 transition-all font-medium">
+              ✏️ Atualizar
+            </button>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <StatusCard
@@ -270,6 +278,17 @@ export default function PlantDetail() {
           </div>
         </div>
       </div>
+
+      {showStatusEditor && (
+        <StatusEditor
+          plantId={id}
+          onClose={() => setShowStatusEditor(false)}
+          onSave={(log) => {
+            setLogs(prev => [log, ...prev]);
+            setShowStatusEditor(false);
+          }}
+        />
+      )}
 
       {showLogForm && (
         <LogForm

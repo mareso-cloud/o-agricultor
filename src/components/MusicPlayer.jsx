@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Pause, Music, SkipForward } from 'lucide-react';
+import { Pause, Music } from 'lucide-react';
 
 const PLAYLIST = [
   'Jk-d2Wsgh9s',
@@ -8,43 +8,66 @@ const PLAYLIST = [
   'ZFn-wxC1XP0',
 ];
 
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export default function MusicPlayer() {
   const [playing, setPlaying] = useState(false);
-  const [trackIndex, setTrackIndex] = useState(0);
   const playerRef = useRef(null);
   const containerRef = useRef(null);
   const readyRef = useRef(false);
+  const queueRef = useRef(shuffle(PLAYLIST));
+  const indexRef = useRef(0);
+
+  const loadNext = () => {
+    indexRef.current = (indexRef.current + 1) % queueRef.current.length;
+    // Re-shuffle when we've gone through all tracks
+    if (indexRef.current === 0) {
+      queueRef.current = shuffle(PLAYLIST);
+    }
+    const player = playerRef.current;
+    if (player && readyRef.current) {
+      player.loadVideoById(queueRef.current[indexRef.current]);
+    }
+  };
 
   useEffect(() => {
-    // Load YouTube IFrame API
-    if (!window.YT) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      document.head.appendChild(tag);
-    }
-
     const initPlayer = () => {
       playerRef.current = new window.YT.Player(containerRef.current, {
-        videoId: PLAYLIST[trackIndex],
+        videoId: queueRef.current[0],
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           controls: 0,
           modestbranding: 1,
           rel: 0,
         },
         events: {
-          onReady: () => { readyRef.current = true; },
+          onReady: (e) => {
+            readyRef.current = true;
+            e.target.playVideo();
+            setPlaying(true);
+          },
           onStateChange: (e) => {
-            // Auto advance when video ends
             if (e.data === window.YT.PlayerState.ENDED) {
-              nextTrack();
+              loadNext();
             }
           },
         },
       });
     };
 
-    if (window.YT && window.YT.Player) {
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+      window.onYouTubeIframeAPIReady = initPlayer;
+    } else if (window.YT.Player) {
       initPlayer();
     } else {
       window.onYouTubeIframeAPIReady = initPlayer;
@@ -71,16 +94,6 @@ export default function MusicPlayer() {
     }
   };
 
-  const nextTrack = () => {
-    const next = (trackIndex + 1) % PLAYLIST.length;
-    setTrackIndex(next);
-    const player = playerRef.current;
-    if (player && readyRef.current) {
-      player.loadVideoById(PLAYLIST[next]);
-      if (playing) player.playVideo();
-    }
-  };
-
   return (
     <>
       {/* Hidden YouTube player */}
@@ -88,29 +101,18 @@ export default function MusicPlayer() {
         <div ref={containerRef} />
       </div>
 
-      {/* Control buttons */}
-      <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-2 items-center">
-        {playing && (
-          <button
-            onClick={nextTrack}
-            title="Próxima faixa"
-            className="w-9 h-9 rounded-full border bg-card border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/40 flex items-center justify-center shadow transition-all"
-          >
-            <SkipForward className="w-4 h-4" />
-          </button>
-        )}
-        <button
-          onClick={toggle}
-          title={playing ? 'Pausar música' : 'Tocar música'}
-          className={`w-12 h-12 rounded-full border flex items-center justify-center shadow-lg transition-all
-            ${playing
-              ? 'bg-primary border-primary/60 text-primary-foreground glow-green animate-pulse-glow'
-              : 'bg-card border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/40'
-            }`}
-        >
-          {playing ? <Pause className="w-5 h-5" /> : <Music className="w-5 h-5" />}
-        </button>
-      </div>
+      {/* Single mute/play button */}
+      <button
+        onClick={toggle}
+        title={playing ? 'Silenciar música' : 'Tocar música'}
+        className={`fixed bottom-5 right-5 z-50 w-12 h-12 rounded-full border flex items-center justify-center shadow-lg transition-all
+          ${playing
+            ? 'bg-primary border-primary/60 text-primary-foreground glow-green animate-pulse-glow'
+            : 'bg-card border-border/60 text-muted-foreground hover:text-foreground hover:border-primary/40'
+          }`}
+      >
+        {playing ? <Pause className="w-5 h-5" /> : <Music className="w-5 h-5" />}
+      </button>
     </>
   );
 }
