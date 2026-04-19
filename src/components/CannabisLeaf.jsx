@@ -17,14 +17,15 @@ const COLOR_FILTERS = [
 
 const LEAF_URL = 'https://media.base44.com/images/public/69e1684117e402d8da5bfd05/76f3b0648_Gemini_Generated_Image_wm4o5jwm4o5jwm4o.png';
 
-export default function CannabisLeaf({ className = "w-10 h-10", colorIndex = 0 }) {
+export default function CannabisLeaf({ className = "w-10 h-10", size, colorIndex = 0 }) {
   const bg = BG_COLORS[colorIndex % BG_COLORS.length];
   const filter = COLOR_FILTERS[colorIndex % COLOR_FILTERS.length];
+  const sizeStyle = size ? { width: size, height: size } : {};
 
   return (
     <div
-      className={`${className} rounded-xl flex items-center justify-center flex-shrink-0`}
-      style={{ background: bg }}
+      className={`${size ? '' : className} rounded-xl flex items-center justify-center flex-shrink-0`}
+      style={{ background: bg, ...sizeStyle }}
     >
       <img
         src={LEAF_URL}
