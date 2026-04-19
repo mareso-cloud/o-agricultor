@@ -217,7 +217,7 @@ function PlantRow({ plant, onDelete, colorIndex = 0 }) {
             <img src={plant.photo_url} alt={plant.name} className="w-full h-full object-cover" />
           </div>
         ) : (
-          <CannabisLeaf className="w-10 h-10" colorIndex={colorIndex} />
+          <CannabisLeaf className="w-12 h-12" colorIndex={colorIndex} />
         )}
         <div className="flex-1 min-w-0">
           <p className="font-semibold text-sm text-foreground truncate">{plant.name}</p>
