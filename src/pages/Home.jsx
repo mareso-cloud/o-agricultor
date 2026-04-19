@@ -181,6 +181,7 @@ export default function Home() {
           height: '30vw',
           overflow: 'hidden',
           opacity: 0.08,
+          left: '16px',
         }}
       >
         <img
