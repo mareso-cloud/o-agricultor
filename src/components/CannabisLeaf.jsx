@@ -30,8 +30,8 @@ export default function CannabisLeaf({ className = "w-10 h-10", colorIndex = 0 }
         src={LEAF_URL}
         alt="cannabis leaf"
         style={{
-          width: '90%',
-          height: '90%',
+          width: '100%',
+          height: '100%',
           objectFit: 'contain',
           filter,
         }}
