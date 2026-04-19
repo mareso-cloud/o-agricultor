@@ -122,8 +122,8 @@ export default function Home() {
             <EmptyState onAdd={() => setShowForm(true)} />
           ) : (
             <div className="space-y-2">
-              {activePlants.map(plant => (
-                <PlantRow key={plant.id} plant={plant} onDelete={deletePlant} />
+              {activePlants.map((plant, index) => (
+                <PlantRow key={plant.id} plant={plant} onDelete={deletePlant} colorIndex={index} />
               ))}
             </div>
           )
@@ -204,7 +204,7 @@ export default function Home() {
   );
 }
 
-function PlantRow({ plant, onDelete }) {
+function PlantRow({ plant, onDelete, colorIndex = 0 }) {
   const days = plant.start_date
     ? differenceInDays(new Date(), new Date(plant.start_date))
     : null;
@@ -216,7 +216,7 @@ function PlantRow({ plant, onDelete }) {
           {plant.photo_url ? (
             <img src={plant.photo_url} alt={plant.name} className="w-full h-full object-cover" />
           ) : (
-            <CannabisLeaf className="w-6 h-6" />
+            <CannabisLeaf className="w-6 h-6" colorIndex={colorIndex} />
           )}
         </div>
         <div className="flex-1 min-w-0">

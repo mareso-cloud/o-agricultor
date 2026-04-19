@@ -10,7 +10,7 @@ import PlantGallery from '@/components/plants/PlantGallery';
 import PlantCharts from '@/components/plants/PlantCharts';
 import PlantConfig from '@/components/plants/PlantConfig';
 import StatusEditor from '@/components/plants/StatusEditor';
-import CannabisLeaf from '@/components/CannabisLeaf';
+import CannabisLeaf, { LEAF_COLORS } from '@/components/CannabisLeaf';
 
 const stageLabel = {
   germinacao: 'Germinação', germinação: 'Germinação',
@@ -34,6 +34,7 @@ export default function PlantDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [plant, setPlant] = useState(null);
+  const [plantColorIndex, setPlantColorIndex] = useState(0);
   const [logs, setLogs] = useState([]);
   const [showLogForm, setShowLogForm] = useState(false);
   const [logFormType, setLogFormType] = useState('observação');
@@ -45,7 +46,12 @@ export default function PlantDetail() {
 
   useEffect(() => {
     Promise.all([
-      base44.entities.Plant.list().then(list => list.find(p => p.id === id)),
+      base44.entities.Plant.list('-created_date').then(list => {
+        const activePlants = list.filter(p => p.status !== 'perdida' && p.status !== 'colhida' && p.status !== 'cura');
+        const idx = activePlants.findIndex(p => p.id === id);
+        setPlantColorIndex(idx >= 0 ? idx : 0);
+        return list.find(p => p.id === id);
+      }),
       base44.entities.Log.filter({ plant_id: id }, '-date'),
     ]).then(([p, l]) => {
       setPlant(p);
@@ -128,7 +134,7 @@ export default function PlantDetail() {
                 <img src={plant.photo_url} alt={plant.name} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <CannabisLeaf className="w-9 h-9" />
+                  <CannabisLeaf className="w-9 h-9" colorIndex={plantColorIndex} />
                 </div>
               )}
             </div>
