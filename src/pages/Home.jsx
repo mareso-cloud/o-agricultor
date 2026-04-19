@@ -174,15 +174,18 @@ export default function Home() {
 
       {/* Vasos decorativos no rodapé — todas as telas */}
       <div
-        className="fixed bottom-0 left-0 pointer-events-none"
-        style={{
-          zIndex: 0,
-          width: '25vw',
-          height: '15vw',
-          overflow: 'hidden',
-          opacity: 0.05,
-          left: '16px',
-        }}
+        className="fixed bottom-0 left-0 pointer-events-none sm:hidden"
+        style={{ zIndex: 0, width: '50vw', height: '30vw', overflow: 'hidden', opacity: 0.05, left: '16px' }}
+      >
+        <img
+          src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/317f584bc_Capturadetela2026-04-19042426.png"
+          alt=""
+          style={{ position: 'absolute', width: '200%', bottom: 0, left: 0, filter: 'invert(1)', objectFit: 'contain', objectPosition: 'left bottom' }}
+        />
+      </div>
+      <div
+        className="fixed bottom-0 left-0 pointer-events-none hidden sm:block"
+        style={{ zIndex: 0, width: '25vw', height: '15vw', overflow: 'hidden', opacity: 0.05, left: '16px' }}
       >
         <img
           src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/317f584bc_Capturadetela2026-04-19042426.png"
