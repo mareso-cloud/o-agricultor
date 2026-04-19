@@ -1,37 +1,41 @@
 export const LEAF_COLORS = ['#E8D44D', '#6DBE45', '#E8404A', '#40C4E8'];
-const BG_COLORS = ['rgba(232,212,77,0.15)', 'rgba(109,190,69,0.15)', 'rgba(232,64,74,0.15)', 'rgba(64,196,232,0.15)'];
 
-// SVG path preciso de folha de cannabis com 7 folíolos serrilhados
-export default function CannabisLeaf({ className = "w-6 h-6", colorIndex = 0 }) {
-  const color = LEAF_COLORS[colorIndex % LEAF_COLORS.length];
+const BG_COLORS = [
+  'rgba(232,212,77,0.15)',
+  'rgba(109,190,69,0.15)',
+  'rgba(232,64,74,0.15)',
+  'rgba(64,196,232,0.15)',
+];
+
+// Filtros CSS para recolorir a folha verde original para cada cor
+const COLOR_FILTERS = [
+  'sepia(1) saturate(4) hue-rotate(5deg) brightness(1.3)',   // amarelo
+  'sepia(1) saturate(3) hue-rotate(80deg) brightness(0.9)',  // verde
+  'sepia(1) saturate(5) hue-rotate(300deg) brightness(1.1)', // vermelho
+  'sepia(1) saturate(4) hue-rotate(160deg) brightness(1.2)', // azul
+];
+
+const LEAF_URL = 'https://media.base44.com/images/public/69e1684117e402d8da5bfd05/05a304286_Gemini_Generated_Image_wm4o5jwm4o5jwm4o.png';
+
+export default function CannabisLeaf({ className = "w-10 h-10", colorIndex = 0 }) {
   const bg = BG_COLORS[colorIndex % BG_COLORS.length];
+  const filter = COLOR_FILTERS[colorIndex % COLOR_FILTERS.length];
 
   return (
     <div
       className={`${className} rounded-xl flex items-center justify-center flex-shrink-0`}
       style={{ background: bg }}
     >
-      <svg viewBox="0 0 100 110" style={{ width: '70%', height: '70%' }} xmlns="http://www.w3.org/2000/svg">
-        {/* Folha de cannabis — 7 folíolos */}
-        <g fill={color}>
-          {/* Folíolo central (topo) */}
-          <ellipse cx="50" cy="22" rx="7" ry="18" transform="rotate(0,50,22)" />
-          {/* Folíolo superior-esquerdo */}
-          <ellipse cx="50" cy="22" rx="6" ry="16" transform="rotate(-30,50,40)" />
-          {/* Folíolo superior-direito */}
-          <ellipse cx="50" cy="22" rx="6" ry="16" transform="rotate(30,50,40)" />
-          {/* Folíolo meio-esquerdo */}
-          <ellipse cx="50" cy="22" rx="5" ry="14" transform="rotate(-60,50,48)" />
-          {/* Folíolo meio-direito */}
-          <ellipse cx="50" cy="22" rx="5" ry="14" transform="rotate(60,50,48)" />
-          {/* Folíolo baixo-esquerdo */}
-          <ellipse cx="50" cy="22" rx="4" ry="12" transform="rotate(-90,50,55)" />
-          {/* Folíolo baixo-direito */}
-          <ellipse cx="50" cy="22" rx="4" ry="12" transform="rotate(90,50,55)" />
-          {/* Caule */}
-          <rect x="48" y="55" width="4" height="22" rx="2" />
-        </g>
-      </svg>
+      <img
+        src={LEAF_URL}
+        alt="cannabis leaf"
+        style={{
+          width: '78%',
+          height: '78%',
+          objectFit: 'contain',
+          filter,
+        }}
+      />
     </div>
   );
 }
