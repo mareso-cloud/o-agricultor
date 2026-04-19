@@ -54,27 +54,27 @@ export default function Home() {
       <div className="max-w-4xl mx-auto px-4 py-6">
         {/* Hero */}
         <div className="mb-6">
-          {/* Top bar: ET logo left | Settings right */}
-          <div className="flex items-center justify-between mb-3">
-            <EtLogo size={56} />
-            <button onClick={() => setShowSettings(true)}
-              className="w-9 h-9 rounded-xl border border-primary/40 bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-all glow-green">
-              <Settings className="w-4 h-4" />
-            </button>
+          {/* Top row: data (esquerda) | ET centralizado | espaço (direita) */}
+          <div className="relative flex items-center justify-center mb-3 min-h-[72px]">
+            <p className="absolute left-0 top-0 text-muted-foreground text-sm">
+              {format(new Date(), "EEEE, d 'de' MMMM", { locale: ptBR })}
+            </p>
+            <EtLogo size={72} />
           </div>
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-muted-foreground text-sm mb-1">
-                {format(new Date(), "EEEE, d 'de' MMMM", { locale: ptBR })}
-              </p>
-              <h1 className="font-syne text-3xl font-bold text-foreground">
-                Seu <span className="text-primary">Jardim</span>
-              </h1>
+          {/* Bottom row: título | engrenagem | botão + */}
+          <div className="flex items-center justify-between">
+            <h1 className="font-syne text-3xl font-bold text-foreground">
+              Seu <span className="text-primary">Jardim</span>
+            </h1>
+            <div className="flex items-center gap-2">
+              <button onClick={() => setShowSettings(true)}
+                className="w-9 h-9 rounded-xl border border-primary/40 bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-all glow-green">
+                <Settings className="w-4 h-4" />
+              </button>
+              <Button onClick={() => setShowForm(true)} className="bg-primary hover:bg-primary/90 gap-2 glow-green">
+                <Plus className="w-4 h-4" />
+              </Button>
             </div>
-            <Button onClick={() => setShowForm(true)} className="bg-primary hover:bg-primary/90 gap-2 glow-green">
-              <Plus className="w-4 h-4" />
-              <span className="hidden sm:inline">Nova Planta</span>
-            </Button>
           </div>
         </div>
 
