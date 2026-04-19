@@ -54,20 +54,22 @@ export default function PlantForm({ onClose, onSave }) {
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full sm:max-w-xl bg-card rounded-t-3xl sm:rounded-2xl border border-border/60 overflow-hidden">
-        <div className="flex items-center justify-between p-5 border-b border-border/40">
+      <div className="relative w-full sm:max-w-xl bg-card rounded-t-3xl sm:rounded-2xl border border-border/60 flex flex-col" style={{ maxHeight: '92dvh' }}>
+        {/* Header — sempre visível, nunca scrollável */}
+        <div className="flex items-center justify-between p-5 border-b border-border/40 flex-shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-primary/15 border border-primary/25 flex items-center justify-center">
               <Leaf className="w-4 h-4 text-primary" />
             </div>
             <h2 className="font-syne font-bold text-foreground">Nova Planta</h2>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-lg border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground">
-            <X className="w-4 h-4" />
+          <button onClick={onClose}
+            className="w-10 h-10 rounded-xl border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all">
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="p-5 space-y-5 max-h-[80vh] overflow-y-auto">
+        <div className="p-5 space-y-5 overflow-y-auto flex-1">
           {/* Photo */}
           <label className="block cursor-pointer">
             <div className="h-24 rounded-xl border-2 border-dashed border-border/60 hover:border-primary/40 flex flex-col items-center justify-center gap-1.5 transition-colors relative overflow-hidden">
@@ -142,7 +144,7 @@ export default function PlantForm({ onClose, onSave }) {
           </F>
         </div>
 
-        <div className="p-5 border-t border-border/40">
+        <div className="p-5 border-t border-border/40 flex-shrink-0 safe-bottom">
           <Button onClick={handleSave} disabled={!form.name.trim() || saving}
             className="w-full h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl glow-green">
             {saving ? 'Salvando...' : '🌱 Adicionar Planta'}
