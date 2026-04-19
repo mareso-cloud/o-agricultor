@@ -301,7 +301,7 @@ export default function PlantDetail() {
       {/* Vasos decorativos no rodapé */}
       <div
         className="fixed bottom-0 left-0 pointer-events-none"
-        style={{ zIndex: 0, width: '50vw', height: '30vw', overflow: 'hidden', opacity: 0.05, left: '16px' }}
+        style={{ zIndex: 0, width: '25vw', height: '15vw', overflow: 'hidden', opacity: 0.05, left: '16px' }}
       >
         <img
           src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/317f584bc_Capturadetela2026-04-19042426.png"

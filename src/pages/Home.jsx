@@ -177,8 +177,8 @@ export default function Home() {
         className="fixed bottom-0 left-0 pointer-events-none"
         style={{
           zIndex: 0,
-          width: '50vw',
-          height: '30vw',
+          width: '25vw',
+          height: '15vw',
           overflow: 'hidden',
           opacity: 0.05,
           left: '16px',
