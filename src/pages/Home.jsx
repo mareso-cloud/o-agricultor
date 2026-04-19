@@ -57,7 +57,7 @@ export default function Home() {
         <div className="mb-6">
           {/* Top row: data (esquerda) | ET centralizado | espaço (direita) */}
           <div className="relative flex items-center justify-center mb-3 min-h-[72px]">
-            <p className="absolute left-0 top-0 text-primary text-sm font-semibold">
+            <p className="absolute left-0 top-0 text-primary text-base font-semibold">
               {format(new Date(), "dd/MM/yyyy")}
             </p>
             <EtLogo size={72} />
@@ -86,8 +86,8 @@ export default function Home() {
               <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center mb-2">
                 <Droplets className="w-4 h-4 text-blue-400" />
               </div>
-              <p className="text-2xl font-bold text-blue-300">{logs.filter(l => l.type === 'rega' && l.date === today).length}</p>
-              <p className="text-xs text-blue-400/80 mt-1">Regas Hoje</p>
+              <p className="text-3xl font-bold text-blue-300">{logs.filter(l => l.type === 'rega' && l.date === today).length}</p>
+              <p className="text-sm text-blue-400/80 mt-1">Regas Hoje</p>
             </div>
           </button>
           <button onClick={() => setShowCure(true)} className="w-full text-left">
@@ -95,8 +95,8 @@ export default function Home() {
               <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center mb-2">
                 <FlaskConical className="w-4 h-4 text-purple-400" />
               </div>
-              <p className="text-2xl font-bold text-purple-300">{curePlants.length}</p>
-              <p className="text-xs text-purple-400/80 mt-1">Plantas na Cura</p>
+              <p className="text-3xl font-bold text-purple-300">{curePlants.length}</p>
+              <p className="text-sm text-purple-400/80 mt-1">Plantas na Cura</p>
             </div>
           </button>
         </div>
@@ -135,7 +135,7 @@ export default function Home() {
 
         {tab === 'registros' && (
           <div>
-            <h2 className="font-syne text-lg font-bold text-foreground mb-3">Atividade Recente</h2>
+            <h2 className="font-syne text-xl font-bold text-foreground mb-3">Atividade Recente</h2>
             {recentLogs.length === 0 ? (
               <div className="rounded-2xl border border-border/50 bg-card p-8 text-center text-muted-foreground text-sm">
                 Nenhum registro ainda
@@ -220,13 +220,13 @@ function PlantRow({ plant, onDelete, colorIndex = 0 }) {
           <CannabisLeaf size={48} colorIndex={colorIndex} />
         )}
         <div className="flex-1 min-w-0">
-          <p className="font-semibold text-sm text-foreground truncate">{plant.name}</p>
-          {plant.strain && <p className="text-xs text-muted-foreground truncate">{plant.strain}</p>}
+          <p className="font-semibold text-base text-foreground truncate">{plant.name}</p>
+          {plant.strain && <p className="text-sm text-muted-foreground truncate">{plant.strain}</p>}
         </div>
         <div className="flex flex-col items-end gap-1 mr-2">
           <StagesBadge stage={plant.stage} />
           {days !== null && (
-            <span className="text-xs text-muted-foreground">Dia {days}</span>
+            <span className="text-sm text-muted-foreground">Dia {days}</span>
           )}
         </div>
       </Link>
@@ -267,26 +267,26 @@ function LogRow({ log, plants }) {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-medium capitalize text-foreground">{log.type}</p>
-            <span className="text-xs text-muted-foreground ml-2 flex-shrink-0">
+            <p className="text-base font-medium capitalize text-foreground">{log.type}</p>
+            <span className="text-sm text-muted-foreground ml-2 flex-shrink-0">
               {log.date ? format(new Date(log.date), 'dd/MM') : ''}
             </span>
           </div>
-          <p className="text-xs text-muted-foreground">{plant?.name || 'Planta'}</p>
+          <p className="text-sm text-muted-foreground">{plant?.name || 'Planta'}</p>
         </div>
       </div>
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mt-2 ml-12">
           {tags.map((t, i) => (
-            <span key={i} className={`text-xs px-2 py-0.5 rounded-full border ${t.color}`}>{t.label}</span>
+            <span key={i} className={`text-sm px-2.5 py-0.5 rounded-full border ${t.color}`}>{t.label}</span>
           ))}
         </div>
       )}
       {log.notes && (
-        <p className="text-xs text-muted-foreground mt-1.5 ml-12 line-clamp-2">{log.notes}</p>
+        <p className="text-sm text-muted-foreground mt-1.5 ml-12 line-clamp-2">{log.notes}</p>
       )}
       {log.nutrients_used && (
-        <p className="text-xs text-primary/70 mt-1 ml-12 line-clamp-1">🧪 {log.nutrients_used}</p>
+        <p className="text-sm text-primary/70 mt-1 ml-12 line-clamp-1">🧪 {log.nutrients_used}</p>
       )}
     </div>
   );
@@ -298,8 +298,8 @@ function EmptyState({ onAdd }) {
       <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-4">
         <Leaf className="w-7 h-7 text-primary" />
       </div>
-      <h3 className="font-syne text-base font-bold mb-2">Nenhuma planta cadastrada</h3>
-      <p className="text-sm text-muted-foreground mb-5">Comece adicionando sua primeira planta</p>
+      <h3 className="font-syne text-lg font-bold mb-2">Nenhuma planta cadastrada</h3>
+      <p className="text-base text-muted-foreground mb-5">Comece adicionando sua primeira planta</p>
       <Button onClick={onAdd} className="bg-primary gap-2 glow-green">
         <Plus className="w-4 h-4" /> Nova Planta
       </Button>
