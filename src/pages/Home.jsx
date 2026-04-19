@@ -82,21 +82,21 @@ export default function Home() {
         {/* Stats */}
         <div className="grid grid-cols-2 gap-3 mb-6">
           <button onClick={() => setShowWaterings(true)} className="w-full text-left">
-            <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-4 h-full flex flex-col justify-between card-hover">
-              <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center mb-2">
-                <Droplets className="w-4 h-4 text-blue-400" />
+            <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-3 h-full flex flex-col justify-between card-hover">
+              <div className="w-6 h-6 rounded-lg bg-blue-500/20 flex items-center justify-center mb-1.5">
+                <Droplets className="w-3.5 h-3.5 text-blue-400" />
               </div>
-              <p className="text-3xl font-bold text-blue-300">{logs.filter(l => l.type === 'rega' && l.date === today).length}</p>
-              <p className="text-sm text-blue-400/80 mt-1">Regas Hoje</p>
+              <p className="text-2xl font-bold text-blue-300">{logs.filter(l => l.type === 'rega' && l.date === today).length}</p>
+              <p className="text-xs text-blue-400/80 mt-1">Regas Hoje</p>
             </div>
           </button>
           <button onClick={() => setShowCure(true)} className="w-full text-left">
-            <div className="rounded-xl border border-purple-500/30 bg-purple-500/10 p-4 h-full flex flex-col justify-between card-hover">
-              <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center mb-2">
-                <FlaskConical className="w-4 h-4 text-purple-400" />
+            <div className="rounded-xl border border-purple-500/30 bg-purple-500/10 p-3 h-full flex flex-col justify-between card-hover">
+              <div className="w-6 h-6 rounded-lg bg-purple-500/20 flex items-center justify-center mb-1.5">
+                <FlaskConical className="w-3.5 h-3.5 text-purple-400" />
               </div>
-              <p className="text-3xl font-bold text-purple-300">{curePlants.length}</p>
-              <p className="text-sm text-purple-400/80 mt-1">Plantas na Cura</p>
+              <p className="text-2xl font-bold text-purple-300">{curePlants.length}</p>
+              <p className="text-xs text-purple-400/80 mt-1">Plantas na Cura</p>
             </div>
           </button>
         </div>
