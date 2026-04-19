@@ -186,7 +186,7 @@ function PlantRow({ plant, onDelete }) {
           {plant.photo_url ? (
             <img src={plant.photo_url} alt={plant.name} className="w-full h-full object-cover" />
           ) : (
-            <img src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/f2b52b9e1_4592.jpg" alt="planta" className="w-full h-full object-cover" />
+            <img src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/c8aaf1528_generated_image.png" alt="planta" className="w-7 h-7 object-contain" />
           )}
         </div>
         <div className="flex-1 min-w-0">
