@@ -10,6 +10,7 @@ import PlantGallery from '@/components/plants/PlantGallery';
 import PlantCharts from '@/components/plants/PlantCharts';
 import PlantConfig from '@/components/plants/PlantConfig';
 import StatusEditor from '@/components/plants/StatusEditor';
+import CannabisLeaf from '@/components/CannabisLeaf';
 
 const stageLabel = {
   germinacao: 'Germinação', germinação: 'Germinação',
@@ -126,7 +127,9 @@ export default function PlantDetail() {
               {plant.photo_url ? (
                 <img src={plant.photo_url} alt={plant.name} className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-2xl">🌿</div>
+                <div className="w-full h-full flex items-center justify-center">
+                  <CannabisLeaf className="w-9 h-9" />
+                </div>
               )}
             </div>
             <div className="flex-1 min-w-0">

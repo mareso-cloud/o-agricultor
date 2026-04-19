@@ -14,6 +14,7 @@ import RemindersTab from '@/components/plants/RemindersTab';
 import PullToRefresh from '@/components/PullToRefresh';
 import EtLogo from '@/components/EtLogo';
 import SettingsModal from '@/components/SettingsModal';
+import CannabisLeaf from '@/components/CannabisLeaf';
 
 export default function Home() {
   const [showForm, setShowForm] = useState(false);
@@ -170,6 +171,45 @@ export default function Home() {
       )}
 
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
+
+      {/* Vasos decorativos no rodapé — mobile */}
+      <div className="fixed bottom-0 left-0 right-0 pointer-events-none flex items-end justify-center gap-4 px-4 pb-2 opacity-10 sm:hidden" style={{zIndex: 0}}>
+        {/* Vaso 1 - menor (germinação) */}
+        <svg viewBox="0 0 60 80" className="w-8 h-10" fill="white">
+          <ellipse cx="30" cy="20" rx="8" ry="10" />
+          <path d="M15 35 Q20 55 30 60 Q40 55 45 35 Z" />
+          <path d="M18 60 L14 75 Q14 78 30 78 Q46 78 46 75 L42 60Z" />
+        </svg>
+        {/* Vaso 2 - muda */}
+        <svg viewBox="0 0 60 90" className="w-10 h-14" fill="white">
+          <path d="M28 5 Q30 2 32 5 L35 15 Q38 10 40 14 Q36 20 32 22 L32 35" stroke="white" strokeWidth="2" fill="none"/>
+          <path d="M28 35 Q24 32 22 28 Q28 26 32 30 Q36 26 38 30 Q36 34 32 35Z"/>
+          <path d="M15 40 Q20 62 30 68 Q40 62 45 40 Z" />
+          <path d="M18 68 L14 82 Q14 85 30 85 Q46 85 46 82 L42 68Z" />
+        </svg>
+        {/* Vaso 3 - vegetativo */}
+        <svg viewBox="0 0 70 110" className="w-12 h-20" fill="white">
+          <path d="M35 5 Q35 2 35 5 L35 45" stroke="white" strokeWidth="2" fill="none"/>
+          <path d="M35 20 Q25 14 20 20 Q26 28 35 26Z"/>
+          <path d="M35 20 Q45 14 50 20 Q44 28 35 26Z"/>
+          <path d="M35 32 Q22 24 16 32 Q24 40 35 38Z"/>
+          <path d="M35 32 Q48 24 54 32 Q46 40 35 38Z"/>
+          <path d="M18 52 Q22 75 35 82 Q48 75 52 52 Z" />
+          <path d="M20 82 L16 98 Q16 102 35 102 Q54 102 54 98 L50 82Z" />
+        </svg>
+        {/* Vaso 4 - floração (maior) */}
+        <svg viewBox="0 0 80 130" className="w-14 h-28" fill="white">
+          <path d="M40 5 L40 55" stroke="white" strokeWidth="2.5" fill="none"/>
+          <path d="M40 15 Q26 8 20 16 Q28 26 40 22Z"/>
+          <path d="M40 15 Q54 8 60 16 Q52 26 40 22Z"/>
+          <path d="M40 28 Q22 18 14 28 Q24 40 40 36Z"/>
+          <path d="M40 28 Q58 18 66 28 Q56 40 40 36Z"/>
+          <path d="M40 42 Q20 30 12 42 Q22 56 40 52Z"/>
+          <path d="M40 42 Q60 30 68 42 Q58 56 40 52Z"/>
+          <path d="M20 62 Q24 90 40 98 Q56 90 60 62 Z" />
+          <path d="M22 98 L17 116 Q17 121 40 121 Q63 121 63 116 L58 98Z" />
+        </svg>
+      </div>
     </div>
   );
 }
@@ -186,7 +226,7 @@ function PlantRow({ plant, onDelete }) {
           {plant.photo_url ? (
             <img src={plant.photo_url} alt={plant.name} className="w-full h-full object-cover" />
           ) : (
-            <span className="text-xl">🍁</span>
+            <CannabisLeaf className="w-6 h-6" />
           )}
         </div>
         <div className="flex-1 min-w-0">
