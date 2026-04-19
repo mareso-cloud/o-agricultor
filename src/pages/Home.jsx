@@ -56,7 +56,7 @@ export default function Home() {
         <div className="mb-6">
           {/* Top row: data (esquerda) | ET centralizado | espaço (direita) */}
           <div className="relative flex items-center justify-center mb-3 min-h-[72px]">
-            <p className="absolute left-0 top-0 text-muted-foreground text-sm">
+            <p className="absolute left-0 top-0 text-muted-foreground text-xs">
               {format(new Date(), "EEEE, d 'de' MMMM", { locale: ptBR })}
             </p>
             <EtLogo size={72} />
@@ -186,7 +186,7 @@ function PlantRow({ plant, onDelete }) {
           {plant.photo_url ? (
             <img src={plant.photo_url} alt={plant.name} className="w-full h-full object-cover" />
           ) : (
-            <img src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/c8aaf1528_generated_image.png" alt="planta" className="w-7 h-7 object-contain" />
+            <span className="text-xl">🌿</span>
           )}
         </div>
         <div className="flex-1 min-w-0">
