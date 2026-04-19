@@ -172,9 +172,9 @@ export default function Home() {
 
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
 
-      {/* Vasos decorativos no rodapé — mobile, quadrante inferior-esquerdo */}
+      {/* Vasos decorativos no rodapé — todas as telas */}
       <div
-        className="fixed bottom-0 left-0 pointer-events-none sm:hidden"
+        className="fixed bottom-0 left-0 pointer-events-none"
         style={{
           zIndex: 0,
           width: '50vw',
