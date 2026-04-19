@@ -180,7 +180,7 @@ export default function Home() {
           width: '50vw',
           height: '30vw',
           overflow: 'hidden',
-          opacity: 0.08,
+          opacity: 0.05,
           left: '16px',
         }}
       >
