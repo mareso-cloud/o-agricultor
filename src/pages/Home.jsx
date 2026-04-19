@@ -212,13 +212,13 @@ function PlantRow({ plant, onDelete, colorIndex = 0 }) {
   return (
     <div className="flex items-center gap-3 p-4 rounded-2xl border border-border/50 bg-card card-hover group">
       <Link to={`/plant/${plant.id}`} className="flex items-center gap-3 flex-1 min-w-0">
-        <div className="w-10 h-10 rounded-xl bg-muted border border-border/40 overflow-hidden flex-shrink-0 flex items-center justify-center">
-          {plant.photo_url ? (
+        {plant.photo_url ? (
+          <div className="w-10 h-10 rounded-xl flex-shrink-0 overflow-hidden border border-border/40">
             <img src={plant.photo_url} alt={plant.name} className="w-full h-full object-cover" />
-          ) : (
-            <CannabisLeaf className="w-6 h-6" colorIndex={colorIndex} />
-          )}
-        </div>
+          </div>
+        ) : (
+          <CannabisLeaf className="w-10 h-10 flex-shrink-0" colorIndex={colorIndex} />
+        )}
         <div className="flex-1 min-w-0">
           <p className="font-semibold text-sm text-foreground truncate">{plant.name}</p>
           {plant.strain && <p className="text-xs text-muted-foreground truncate">{plant.strain}</p>}

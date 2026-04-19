@@ -134,7 +134,7 @@ export default function PlantDetail() {
                 <img src={plant.photo_url} alt={plant.name} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <CannabisLeaf className="w-9 h-9" colorIndex={plantColorIndex} />
+                  <CannabisLeaf className="w-12 h-12" colorIndex={plantColorIndex} />
                 </div>
               )}
             </div>
