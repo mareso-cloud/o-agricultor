@@ -15,7 +15,7 @@ const COLOR_FILTERS = [
   'sepia(1) saturate(4) hue-rotate(160deg) brightness(1.2)', // azul
 ];
 
-const LEAF_URL = 'https://media.base44.com/images/public/69e1684117e402d8da5bfd05/05a304286_Gemini_Generated_Image_wm4o5jwm4o5jwm4o.png';
+const LEAF_URL = 'https://media.base44.com/images/public/69e1684117e402d8da5bfd05/76f3b0648_Gemini_Generated_Image_wm4o5jwm4o5jwm4o.png';
 
 export default function CannabisLeaf({ className = "w-10 h-10", colorIndex = 0 }) {
   const bg = BG_COLORS[colorIndex % BG_COLORS.length];
