@@ -114,7 +114,7 @@ export default function Home() {
                 <Droplets className="w-3.5 h-3.5 text-blue-400" />
               </div>
               <p className="text-2xl font-bold text-blue-300">{logs.filter(l => (l.type === 'rega' || l.type === 'nutrição') && l.date === today).length}</p>
-              <p className="text-xs text-blue-400/80 mt-1">Regas Hoje</p>
+              <p className="text-xs text-blue-400/80 mt-1">Regas</p>
             </div>
           </button>
           <button onClick={() => setShowCure(true)} className="w-full text-left">
@@ -129,18 +129,18 @@ export default function Home() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-4">
+        <div className="grid grid-cols-3 gap-2 mb-4">
           <button onClick={() => setTab('plantas')}
-            className={`flex items-center gap-1.5 h-9 px-4 rounded-xl text-sm font-medium transition-all border ${tab === 'plantas' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
-            <Leaf className="w-5 h-5" /> Plantas Ativas
+            className={`flex items-center justify-center gap-1.5 h-9 px-2 rounded-xl text-sm font-medium transition-all border ${tab === 'plantas' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
+            <Leaf className="w-4 h-4 flex-shrink-0" /> <span className="truncate">Plantas</span>
           </button>
           <button onClick={() => setTab('registros')}
-            className={`flex items-center gap-1.5 h-9 px-4 rounded-xl text-sm font-medium transition-all border ${tab === 'registros' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
-            <ClipboardList className="w-3.5 h-3.5" /> Registros
+            className={`flex items-center justify-center gap-1.5 h-9 px-2 rounded-xl text-sm font-medium transition-all border ${tab === 'registros' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
+            <ClipboardList className="w-4 h-4 flex-shrink-0" /> <span className="truncate">Registros</span>
           </button>
           <button onClick={() => setTab('lembretes')}
-            className={`flex items-center gap-1.5 h-9 px-4 rounded-xl text-sm font-medium transition-all border ${tab === 'lembretes' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
-            <Bell className="w-3.5 h-3.5" /> Lembretes
+            className={`flex items-center justify-center gap-1.5 h-9 px-2 rounded-xl text-sm font-medium transition-all border ${tab === 'lembretes' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
+            <Bell className="w-4 h-4 flex-shrink-0" /> <span className="truncate">Lembretes</span>
           </button>
         </div>
 
