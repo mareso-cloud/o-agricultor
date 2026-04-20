@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
@@ -19,7 +19,21 @@ import CannabisLeaf from '@/components/CannabisLeaf';
 export default function Home() {
   const [showForm, setShowForm] = useState(false);
   const [tab, setTab] = useState('plantas');
+  const [localLogs, setLocalLogs] = useState([]);
   const queryClient = useQueryClient();
+
+  // Escuta criações de logs em tempo real (captura regas feitas em PlantDetail)
+  useEffect(() => {
+    const unsubscribe = base44.entities.Log.subscribe((event) => {
+      if (event.type === 'create') {
+        setLocalLogs(prev => {
+          if (prev.find(l => l.id === event.id)) return prev;
+          return [event.data, ...prev];
+        });
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   const { data: plants = [] } = useQuery({
     queryKey: ['plants'],
@@ -37,11 +51,13 @@ export default function Home() {
     queryClient.invalidateQueries({ queryKey: ['plants'] });
   };
 
-  const { data: logs = [], refetch: refetchLogs } = useQuery({
+  const { data: fetchedLogs = [] } = useQuery({
     queryKey: ['logs'],
     queryFn: () => base44.entities.Log.list('-date', 200),
-    refetchInterval: 10000,
   });
+
+  // Combina logs do servidor com logs criados localmente na sessão (para capturar regas anônimas)
+  const logs = [...localLogs, ...fetchedLogs.filter(fl => !localLogs.find(ll => ll.id === fl.id))];
 
   const activePlants = plants.filter(p => p.status !== 'perdida' && p.status !== 'colhida' && p.status !== 'cura');
   const curePlants = plants.filter(p => p.status === 'cura');
