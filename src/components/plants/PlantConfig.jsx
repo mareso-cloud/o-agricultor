@@ -72,7 +72,7 @@ export default function PlantConfig({ plant, onUpdate }) {
           <Field label="Marca"><Input value={form.nutrient_brand || ''} onChange={e => set('nutrient_brand', e.target.value)} placeholder="Ex: Plagron" /></Field>
           <Field label="Linha"><Input value={form.nutrient_line || ''} onChange={e => set('nutrient_line', e.target.value)} placeholder="Ex: Alga Bloom" /></Field>
         </Row2>
-        <Field label="Dose (ml/L)"><Input type="number" value={form.nutrient_dose_ml || ''} onChange={e => set('nutrient_dose_ml', e.target.value ? Number(e.target.value) : '')} placeholder="Ex: 2.5" /></Field>
+        <Field label="Dose (ml/L)"><Input value={form.nutrient_dose_ml || ''} onChange={e => set('nutrient_dose_ml', e.target.value)} placeholder="Ex: 2ml vega / 2ml micro / 1ml flora" /></Field>
       </Section>
 
       <Section label="Rendimento">

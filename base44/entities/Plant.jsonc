@@ -125,8 +125,8 @@
       "description": "Linha de nutri\u00e7\u00e3o"
     },
     "nutrient_dose_ml": {
-      "type": "number",
-      "description": "Dose de nutrientes em ml por litro"
+      "type": "string",
+      "description": "Dose dos nutrientes (texto livre, ex: 2ml vega / 2ml micro)"
     },
     "expected_yield": {
       "type": "number",
