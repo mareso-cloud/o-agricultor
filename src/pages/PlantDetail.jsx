@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, Plus, Droplets, BarChart2, Camera, Settings, Activity, Bell, FlaskConical } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { differenceInDays, formatDistanceToNow } from 'date-fns';
@@ -43,6 +44,7 @@ export default function PlantDetail() {
   const [waterAlert, setWaterAlert] = useState(false);
   const [wateringNow, setWateringNow] = useState(false);
   const [showStatusEditor, setShowStatusEditor] = useState(false);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     Promise.all([
@@ -89,6 +91,7 @@ export default function PlantDetail() {
     });
     setLogs(prev => [log, ...prev]);
     setWateringNow(false);
+    queryClient.invalidateQueries({ queryKey: ['logs'] });
   };
 
   const openLogForm = (type = 'observação') => {
@@ -319,6 +322,7 @@ export default function PlantDetail() {
           onSave={(log) => {
             setLogs(prev => [log, ...prev]);
             setShowLogForm(false);
+            queryClient.invalidateQueries({ queryKey: ['logs'] });
           }}
         />
       )}
