@@ -244,7 +244,7 @@ function PlantRow({ plant, onDelete, colorIndex = 0 }) {
     : null;
 
   return (
-    <div className="flex items-center gap-3 px-3 py-2 rounded-xl border border-border/50 bg-card card-hover group">
+    <div className="flex items-center gap-2 px-2 py-1.5 rounded-xl border border-border/50 bg-card card-hover group">
       <Link to={`/plant/${plant.id}`} className="flex items-center gap-3 flex-1 min-w-0">
         {plant.photo_url ? (
           <div className="w-10 h-10 rounded-xl flex-shrink-0 overflow-hidden border border-border/40">
