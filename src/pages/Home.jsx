@@ -180,7 +180,7 @@ export default function Home() {
       </PullToRefresh>
 
       {showWaterings && (
-        <WateringsModal logs={logs} plants={plants} onClose={() => setShowWaterings(false)} />
+        <WateringsModal logs={logs} plants={plants} onClose={() => setShowWaterings(false)} onDeleteLog={deleteLog} />
       )}
 
       {showCure && (
