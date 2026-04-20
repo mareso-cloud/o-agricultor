@@ -51,6 +51,13 @@ export default function Home() {
     queryClient.invalidateQueries({ queryKey: ['plants'] });
   };
 
+  const deleteLog = async (logId) => {
+    if (!confirm('Apagar este registro?')) return;
+    await base44.entities.Log.delete(logId);
+    setLocalLogs(prev => prev.filter(l => l.id !== logId));
+    queryClient.invalidateQueries({ queryKey: ['logs'] });
+  };
+
   const { data: fetchedLogs = [] } = useQuery({
     queryKey: ['logs'],
     queryFn: () => base44.entities.Log.filter({}, '-date', 200),
@@ -61,7 +68,9 @@ export default function Home() {
 
   const activePlants = plants.filter(p => p.status !== 'perdida' && p.status !== 'colhida' && p.status !== 'cura');
   const curePlants = plants.filter(p => p.status === 'cura');
-  const recentLogs = logs.slice(0, 5);
+  const activePlantIds = new Set(activePlants.map(p => p.id));
+  const activeLogs = logs.filter(l => activePlantIds.has(l.plant_id));
+  const recentLogs = activeLogs.slice(0, 5);
   const today = format(new Date(), 'yyyy-MM-dd');
   const [showCure, setShowCure] = useState(false);
   const [showWaterings, setShowWaterings] = useState(false);
@@ -154,14 +163,14 @@ export default function Home() {
         {tab === 'registros' && (
           <div>
             <h2 className="font-syne text-xl font-bold text-foreground mb-3">Atividade Recente</h2>
-            {recentLogs.length === 0 ? (
+            {activeLogs.length === 0 ? (
               <div className="rounded-2xl border border-border/50 bg-card p-8 text-center text-muted-foreground text-sm">
                 Nenhum registro ainda
               </div>
             ) : (
               <div className="space-y-2">
-                {logs.map(log => (
-                  <LogRow key={log.id} log={log} plants={plants} />
+                {activeLogs.map(log => (
+                  <LogRow key={log.id} log={log} plants={plants} onDelete={deleteLog} />
                 ))}
               </div>
             )}
@@ -261,7 +270,7 @@ function PlantRow({ plant, onDelete, colorIndex = 0 }) {
   );
 }
 
-function LogRow({ log, plants }) {
+function LogRow({ log, plants, onDelete }) {
   const plant = plants.find(p => p.id === log.plant_id);
   const typeEmoji = {
     rega: '💧', 'nutrição': '🧪', poda: '✂️', foto: '📷',
@@ -281,7 +290,7 @@ function LogRow({ log, plants }) {
   if (log.water_ml) tags.push({ label: `💦 ${log.water_ml}ml`, color: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/25' });
 
   return (
-    <div className="p-4 rounded-2xl border border-border/50 bg-card">
+    <div className="p-4 rounded-2xl border border-border/50 bg-card group">
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 rounded-xl bg-muted border border-border/40 flex items-center justify-center text-base flex-shrink-0">
           {typeEmoji[log.type] || '📝'}
@@ -289,9 +298,15 @@ function LogRow({ log, plants }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
             <p className="text-base font-medium capitalize text-foreground">{log.type}</p>
-            <span className="text-sm text-muted-foreground ml-2 flex-shrink-0">
-              {log.date ? format(new Date(log.date), 'dd/MM') : ''}
-            </span>
+            <div className="flex items-center gap-2 ml-2 flex-shrink-0">
+              <span className="text-sm text-muted-foreground">
+                {log.date ? format(new Date(log.date), 'dd/MM') : ''}
+              </span>
+              <button onClick={() => onDelete(log.id)}
+                className="w-7 h-7 rounded-lg flex items-center justify-center text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-all opacity-0 group-hover:opacity-100">
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
           <p className="text-sm text-muted-foreground">{plant?.name || 'Planta'}</p>
         </div>
