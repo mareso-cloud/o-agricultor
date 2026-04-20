@@ -107,23 +107,27 @@ export default function Home() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="grid grid-cols-2 gap-3 mb-4">
           <button onClick={() => setShowWaterings(true)} className="w-full text-left">
-            <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 p-3 h-full flex flex-col justify-between card-hover">
-              <div className="w-6 h-6 rounded-lg bg-blue-500/20 flex items-center justify-center mb-1.5">
+            <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 px-3 py-2 flex items-center gap-3 card-hover">
+              <div className="w-7 h-7 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
                 <Droplets className="w-3.5 h-3.5 text-blue-400" />
               </div>
-              <p className="text-2xl font-bold text-blue-300">{logs.filter(l => (l.type === 'rega' || l.type === 'nutrição') && l.date === today).length}</p>
-              <p className="text-xs text-blue-400/80 mt-1">Regas</p>
+              <div>
+                <p className="text-lg font-bold text-blue-300 leading-none">{logs.filter(l => (l.type === 'rega' || l.type === 'nutrição') && l.date === today).length}</p>
+                <p className="text-xs text-blue-400/80 mt-0.5">Regas</p>
+              </div>
             </div>
           </button>
           <button onClick={() => setShowCure(true)} className="w-full text-left">
-            <div className="rounded-xl border border-purple-500/30 bg-purple-500/10 p-3 h-full flex flex-col justify-between card-hover">
-              <div className="w-6 h-6 rounded-lg bg-purple-500/20 flex items-center justify-center mb-1.5">
+            <div className="rounded-xl border border-purple-500/30 bg-purple-500/10 px-3 py-2 flex items-center gap-3 card-hover">
+              <div className="w-7 h-7 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
                 <FlaskConical className="w-3.5 h-3.5 text-purple-400" />
               </div>
-              <p className="text-2xl font-bold text-purple-300">{curePlants.length}</p>
-              <p className="text-xs text-purple-400/80 mt-1">Plantas na Cura</p>
+              <div>
+                <p className="text-lg font-bold text-purple-300 leading-none">{curePlants.length}</p>
+                <p className="text-xs text-purple-400/80 mt-0.5">Plantas na Cura</p>
+              </div>
             </div>
           </button>
         </div>
@@ -131,16 +135,16 @@ export default function Home() {
         {/* Tabs */}
         <div className="grid grid-cols-3 gap-2 mb-4">
           <button onClick={() => setTab('plantas')}
-            className={`flex items-center justify-center gap-1.5 h-9 px-2 rounded-xl text-sm font-medium transition-all border ${tab === 'plantas' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
-            <Leaf className="w-4 h-4 flex-shrink-0" /> <span className="truncate">Plantas</span>
+            className={`flex items-center justify-center gap-1 h-8 px-1 rounded-xl text-xs font-semibold transition-all border ${tab === 'plantas' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
+            <Leaf className="w-3.5 h-3.5 flex-shrink-0" /> Plantas Ativas
           </button>
           <button onClick={() => setTab('registros')}
-            className={`flex items-center justify-center gap-1.5 h-9 px-2 rounded-xl text-sm font-medium transition-all border ${tab === 'registros' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
-            <ClipboardList className="w-4 h-4 flex-shrink-0" /> <span className="truncate">Registros</span>
+            className={`flex items-center justify-center gap-1 h-8 px-1 rounded-xl text-xs font-semibold transition-all border ${tab === 'registros' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
+            <ClipboardList className="w-3.5 h-3.5 flex-shrink-0" /> Registros
           </button>
           <button onClick={() => setTab('lembretes')}
-            className={`flex items-center justify-center gap-1.5 h-9 px-2 rounded-xl text-sm font-medium transition-all border ${tab === 'lembretes' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
-            <Bell className="w-4 h-4 flex-shrink-0" /> <span className="truncate">Lembretes</span>
+            className={`flex items-center justify-center gap-1 h-8 px-1 rounded-xl text-xs font-semibold transition-all border ${tab === 'lembretes' ? 'bg-primary/15 border-primary/40 text-primary' : 'border-border/50 text-muted-foreground hover:text-foreground hover:border-border'}`}>
+            <Bell className="w-3.5 h-3.5 flex-shrink-0" /> Lembretes
           </button>
         </div>
 
