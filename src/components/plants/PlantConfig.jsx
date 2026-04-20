@@ -68,14 +68,28 @@ export default function PlantConfig({ plant, onUpdate }) {
       </Section>
 
       <Section label="Nutrição">
-        <Row2>
-          <Field label="Marca 1"><Input value={form.nutrient_brand || ''} onChange={e => set('nutrient_brand', e.target.value)} placeholder="Ex: Plagron" /></Field>
-          <Field label="Dose (ml/L)"><Input value={form.nutrient_dose_ml || ''} onChange={e => set('nutrient_dose_ml', e.target.value)} placeholder="Ex: 2ml vega / 2ml micro" /></Field>
-        </Row2>
-        <Row2>
-          <Field label="Marca 2"><Input value={form.nutrient_brand2 || ''} onChange={e => set('nutrient_brand2', e.target.value)} placeholder="Ex: BioBizz" /></Field>
-          <Field label="Dose (ml/L)"><Input value={form.nutrient_dose_ml2 || ''} onChange={e => set('nutrient_dose_ml2', e.target.value)} placeholder="Ex: 1ml bloom" /></Field>
-        </Row2>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-2">
+            <Field label="Marca 1">
+              <Input value={form.nutrient_brand || ''} onChange={e => set('nutrient_brand', e.target.value)} placeholder="Ex: Plagron" />
+            </Field>
+            <Field label="Dose (ml/L)">
+              <textarea value={form.nutrient_dose_ml || ''} onChange={e => set('nutrient_dose_ml', e.target.value)}
+                placeholder="Ex: vega 2ml / flora 1ml"
+                className="w-full bg-input border border-border/60 rounded-xl p-3 text-sm text-foreground placeholder:text-muted-foreground resize-none h-16 focus:outline-none focus:ring-1 focus:ring-primary/50" />
+            </Field>
+          </div>
+          <div className="space-y-2">
+            <Field label="Marca 2">
+              <Input value={form.nutrient_brand2 || ''} onChange={e => set('nutrient_brand2', e.target.value)} placeholder="Ex: BioBizz" />
+            </Field>
+            <Field label="Dose (ml/L)">
+              <textarea value={form.nutrient_dose_ml2 || ''} onChange={e => set('nutrient_dose_ml2', e.target.value)}
+                placeholder="Ex: bloom 1ml / top 0.5ml"
+                className="w-full bg-input border border-border/60 rounded-xl p-3 text-sm text-foreground placeholder:text-muted-foreground resize-none h-16 focus:outline-none focus:ring-1 focus:ring-primary/50" />
+            </Field>
+          </div>
+        </div>
       </Section>
 
       <Section label="Rendimento">
