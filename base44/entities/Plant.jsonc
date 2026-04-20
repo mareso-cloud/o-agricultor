@@ -118,15 +118,23 @@
     },
     "nutrient_brand": {
       "type": "string",
-      "description": "Marca de nutrientes"
-    },
-    "nutrient_line": {
-      "type": "string",
-      "description": "Linha de nutri\u00e7\u00e3o"
+      "description": "Marca 1 de nutrientes"
     },
     "nutrient_dose_ml": {
       "type": "string",
-      "description": "Dose dos nutrientes (texto livre, ex: 2ml vega / 2ml micro)"
+      "description": "Dose da marca 1 (ml/L)"
+    },
+    "nutrient_brand2": {
+      "type": "string",
+      "description": "Marca 2 de nutrientes"
+    },
+    "nutrient_dose_ml2": {
+      "type": "string",
+      "description": "Dose da marca 2 (ml/L)"
+    },
+    "nutrient_line": {
+      "type": "string",
+      "description": "Linha de nutri\u00e7\u00e3o (legado)"
     },
     "expected_yield": {
       "type": "number",

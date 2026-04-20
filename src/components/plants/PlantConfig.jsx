@@ -69,10 +69,13 @@ export default function PlantConfig({ plant, onUpdate }) {
 
       <Section label="Nutrição">
         <Row2>
-          <Field label="Marca"><Input value={form.nutrient_brand || ''} onChange={e => set('nutrient_brand', e.target.value)} placeholder="Ex: Plagron" /></Field>
-          <Field label="Linha"><Input value={form.nutrient_line || ''} onChange={e => set('nutrient_line', e.target.value)} placeholder="Ex: Alga Bloom" /></Field>
+          <Field label="Marca 1"><Input value={form.nutrient_brand || ''} onChange={e => set('nutrient_brand', e.target.value)} placeholder="Ex: Plagron" /></Field>
+          <Field label="Dose (ml/L)"><Input value={form.nutrient_dose_ml || ''} onChange={e => set('nutrient_dose_ml', e.target.value)} placeholder="Ex: 2ml vega / 2ml micro" /></Field>
         </Row2>
-        <Field label="Dose (ml/L)"><Input value={form.nutrient_dose_ml || ''} onChange={e => set('nutrient_dose_ml', e.target.value)} placeholder="Ex: 2ml vega / 2ml micro / 1ml flora" /></Field>
+        <Row2>
+          <Field label="Marca 2"><Input value={form.nutrient_brand2 || ''} onChange={e => set('nutrient_brand2', e.target.value)} placeholder="Ex: BioBizz" /></Field>
+          <Field label="Dose (ml/L)"><Input value={form.nutrient_dose_ml2 || ''} onChange={e => set('nutrient_dose_ml2', e.target.value)} placeholder="Ex: 1ml bloom" /></Field>
+        </Row2>
       </Section>
 
       <Section label="Rendimento">
