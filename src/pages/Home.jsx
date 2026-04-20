@@ -53,7 +53,7 @@ export default function Home() {
 
   const { data: fetchedLogs = [] } = useQuery({
     queryKey: ['logs'],
-    queryFn: () => base44.entities.Log.list('-date', 200),
+    queryFn: () => base44.entities.Log.filter({}, '-date', 200),
   });
 
   // Combina logs do servidor com logs criados localmente na sessão (para capturar regas anônimas)

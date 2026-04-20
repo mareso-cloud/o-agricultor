@@ -4,7 +4,7 @@ import { ptBR } from 'date-fns/locale';
 
 export default function WateringsModal({ logs, plants, onClose }) {
   const today = format(new Date(), 'yyyy-MM-dd');
-  const wateringsToday = logs.filter(l => l.type === 'rega' && l.date === today);
+  const wateringsToday = logs.filter(l => (l.type === 'rega' || l.type === 'nutrição') && l.date === today);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
