@@ -257,8 +257,8 @@ export default function PlantDetail() {
             {[
               { key: 'logs', label: 'Logs', icon: Activity },
               { key: 'fotos', label: 'Fotos', icon: Camera },
-              { key: 'graficos', label: 'Gráficos', icon: BarChart2 },
               { key: 'config', label: 'Config', icon: Settings },
+              { key: 'graficos', label: 'Gráficos', icon: BarChart2 },
             ].map(({ key, label, icon: Icon }) => (
               <button key={key} onClick={() => setTab(key)}
                 className={`flex items-center gap-1.5 px-4 py-3 text-sm font-medium transition-all border-b-2 ${tab === key ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}>
