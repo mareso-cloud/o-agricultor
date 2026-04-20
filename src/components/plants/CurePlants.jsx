@@ -10,7 +10,14 @@ export default function CurePlants({ plants, onClose, onUpdate }) {
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
       <div className="relative flex flex-col w-full h-full bg-card animate-fade-in">
         <div className="flex items-center justify-between p-5 border-b border-border/40 safe-top">
-...
+          <div className="flex items-center gap-2">
+            <FlaskConical className="w-5 h-5 text-purple-400" />
+            <h2 className="font-syne font-bold text-foreground">Plantas na Cura</h2>
+          </div>
+          <button onClick={onClose} className="w-8 h-8 rounded-lg border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
         <div className="flex-1 p-5 space-y-3 overflow-y-auto">
           {plants.length === 0 ? (
             <div className="text-center py-10 text-muted-foreground">
