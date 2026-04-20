@@ -38,7 +38,7 @@ export default function Home() {
 
   const { data: logs = [] } = useQuery({
     queryKey: ['logs'],
-    queryFn: () => base44.entities.Log.list('-date', 50),
+    queryFn: () => base44.entities.Log.list('-date', 200),
   });
 
   const activePlants = plants.filter(p => p.status !== 'perdida' && p.status !== 'colhida' && p.status !== 'cura');
@@ -86,7 +86,7 @@ export default function Home() {
               <div className="w-6 h-6 rounded-lg bg-blue-500/20 flex items-center justify-center mb-1.5">
                 <Droplets className="w-3.5 h-3.5 text-blue-400" />
               </div>
-              <p className="text-2xl font-bold text-blue-300">{logs.filter(l => l.type === 'rega' && l.date === today).length}</p>
+              <p className="text-2xl font-bold text-blue-300">{logs.filter(l => (l.type === 'rega' || l.type === 'nutrição') && l.date === today).length}</p>
               <p className="text-xs text-blue-400/80 mt-1">Regas Hoje</p>
             </div>
           </button>
