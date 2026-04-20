@@ -27,7 +27,8 @@ export default function Home() {
   });
 
   const handleRefresh = async () => {
-    await queryClient.invalidateQueries();
+    await queryClient.invalidateQueries({ queryKey: ['logs'] });
+    await queryClient.invalidateQueries({ queryKey: ['plants'] });
   };
 
   const deletePlant = async (id) => {
@@ -36,9 +37,10 @@ export default function Home() {
     queryClient.invalidateQueries({ queryKey: ['plants'] });
   };
 
-  const { data: logs = [] } = useQuery({
+  const { data: logs = [], refetch: refetchLogs } = useQuery({
     queryKey: ['logs'],
     queryFn: () => base44.entities.Log.list('-date', 200),
+    refetchInterval: 10000,
   });
 
   const activePlants = plants.filter(p => p.status !== 'perdida' && p.status !== 'colhida' && p.status !== 'cura');
