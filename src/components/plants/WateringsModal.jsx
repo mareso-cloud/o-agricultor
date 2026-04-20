@@ -32,7 +32,7 @@ export default function WateringsModal({ logs, plants, onClose, onDeleteLog }) {
     <div className="fixed inset-0 z-50 flex flex-col">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
       <div className="relative flex flex-col w-full h-full bg-card animate-fade-in">
-        <div className="flex items-center justify-between p-5 border-b border-border/40 safe-top">
+        <div className="flex items-center justify-between p-5 border-b border-border/40" style={{ paddingTop: 'calc(1.25rem + env(safe-area-inset-top, 16px))' }}>
           <div className="flex items-center gap-2">
             <Droplets className="w-5 h-5 text-blue-400" />
             <h2 className="font-syne font-bold text-foreground">Regas</h2>
