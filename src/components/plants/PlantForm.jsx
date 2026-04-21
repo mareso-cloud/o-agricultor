@@ -144,7 +144,7 @@ export default function PlantForm({ onClose, onSave }) {
           </F>
         </div>
 
-        <div className="p-5 border-t border-border/40 flex-shrink-0 safe-bottom">
+        <div className="p-5 border-t border-border/40 flex-shrink-0" style={{ paddingBottom: 'calc(1.25rem + env(safe-area-inset-bottom, 0px))' }}>
           <Button onClick={handleSave} disabled={!form.name.trim() || saving}
             className="w-full h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl glow-green">
             {saving ? 'Salvando...' : '🌱 Adicionar Planta'}

@@ -194,7 +194,8 @@ export default function Home() {
       {showForm && (
         <PlantForm
           onClose={() => setShowForm(false)}
-          onSave={() => {
+          onSave={(saved) => {
+            queryClient.setQueryData(['plants'], (old = []) => [saved, ...old]);
             queryClient.invalidateQueries({ queryKey: ['plants'] });
             setShowForm(false);
           }}
@@ -266,9 +267,9 @@ function PlantRow({ plant, onDelete, colorIndex = 0 }) {
       </Link>
       <button
         onClick={() => onDelete(plant.id)}
-        className="w-8 h-8 rounded-xl flex items-center justify-center text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-all opacity-0 group-hover:opacity-100 flex-shrink-0"
+        className="w-11 h-11 rounded-xl flex items-center justify-center text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-all opacity-0 group-hover:opacity-100 flex-shrink-0"
       >
-        <Trash2 className="w-3.5 h-3.5" />
+        <Trash2 className="w-4 h-4" />
       </button>
     </div>
   );
@@ -307,8 +308,8 @@ function LogRow({ log, plants, onDelete }) {
                 {log.date ? format(new Date(log.date), 'dd/MM') : ''}
               </span>
               <button onClick={() => onDelete(log.id)}
-                className="w-7 h-7 rounded-lg flex items-center justify-center text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-all opacity-0 group-hover:opacity-100">
-                <Trash2 className="w-3.5 h-3.5" />
+                className="w-11 h-11 rounded-lg flex items-center justify-center text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-all opacity-0 group-hover:opacity-100">
+                <Trash2 className="w-4 h-4" />
               </button>
             </div>
           </div>

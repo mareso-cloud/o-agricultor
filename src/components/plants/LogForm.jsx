@@ -215,9 +215,9 @@ export default function LogForm({ plantId, onClose, onSave, initialType = 'obser
           </div>
         </div>
 
-        <div className="p-5 border-t border-border/40">
+        <div className="p-5 border-t border-border/40" style={{ paddingBottom: 'calc(1.25rem + env(safe-area-inset-bottom, 0px))' }}>
           <Button onClick={handleSave} disabled={saving || uploading}
-            className="w-full h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl glow-green">
+            className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl glow-green">
             {saving ? 'Salvando...' : '✅ Salvar Registro'}
           </Button>
         </div>
