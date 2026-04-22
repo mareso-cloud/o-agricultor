@@ -320,9 +320,15 @@ export default function PlantDetail() {
           initialType={logFormType}
           onClose={() => setShowLogForm(false)}
           onSave={(log) => {
-            setLogs(prev => [log, ...prev]);
-            setShowLogForm(false);
-            queryClient.invalidateQueries({ queryKey: ['logs'] });
+            setLogs(prev => {
+              // Replace existing temp record or prepend
+              const withoutTemp = prev.filter(l => !l._optimistic && l.id !== log.id);
+              return [log, ...withoutTemp];
+            });
+            if (!log._optimistic) {
+              setShowLogForm(false);
+              queryClient.invalidateQueries({ queryKey: ['logs'] });
+            }
           }}
         />
       )}

@@ -27,8 +27,10 @@ export default function Home() {
     const unsubscribe = base44.entities.Log.subscribe((event) => {
       if (event.type === 'create') {
         setLocalLogs(prev => {
-          if (prev.find(l => l.id === event.id)) return prev;
-          return [event.data, ...prev];
+          // Remove any optimistic placeholder, then add the real record
+          const withoutOptimistic = prev.filter(l => !l._optimistic);
+          if (withoutOptimistic.find(l => l.id === event.id)) return withoutOptimistic;
+          return [event.data, ...withoutOptimistic];
         });
       }
     });
@@ -195,9 +197,15 @@ export default function Home() {
         <PlantForm
           onClose={() => setShowForm(false)}
           onSave={(saved) => {
-            queryClient.setQueryData(['plants'], (old = []) => [saved, ...old]);
-            queryClient.invalidateQueries({ queryKey: ['plants'] });
-            setShowForm(false);
+            queryClient.setQueryData(['plants'], (old = []) => {
+              // Replace temp optimistic record or prepend real one
+              const withoutTemp = (old || []).filter(p => !p._optimistic && p.id !== saved.id);
+              return [saved, ...withoutTemp];
+            });
+            if (!saved._optimistic) {
+              queryClient.invalidateQueries({ queryKey: ['plants'] });
+              setShowForm(false);
+            }
           }}
         />
       )}
