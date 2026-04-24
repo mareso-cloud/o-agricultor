@@ -17,22 +17,21 @@ function shuffle(arr) {
   return a;
 }
 
-// Singleton — criado uma vez, nunca destruído
 let _player = null;
 let _ready = false;
 let _queue = shuffle(PLAYLIST);
 let _index = 0;
 let _isPlaying = false;
+let _initialized = false;
 let _listeners = new Set();
 
 function notify() {
   _listeners.forEach(fn => fn(_isPlaying));
 }
 
-function initYT() {
+function createPlayer() {
   if (_player) return;
 
-  // Container permanente fora do React
   const container = document.createElement('div');
   container.style.cssText = 'position:fixed;bottom:0;right:0;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;';
   const inner = document.createElement('div');
@@ -41,16 +40,15 @@ function initYT() {
 
   _player = new window.YT.Player(inner, {
     videoId: _queue[_index],
-    playerVars: { autoplay: 1, controls: 0, modestbranding: 1, rel: 0 },
+    playerVars: { autoplay: 0, controls: 0, modestbranding: 1, rel: 0 },
     events: {
       onReady: (e) => {
         _ready = true;
-        e.target.playVideo();
-        _isPlaying = true;
-        notify();
+        e.target.setVolume(50);
+        // Não toca automaticamente — aguarda o usuário clicar
       },
       onStateChange: (e) => {
-        if (e.data === window.YT.PlayerState.ENDED) {
+        if (e.data === window.YT.PlayerState.ENDED && _isPlaying) {
           _index = (_index + 1) % _queue.length;
           if (_index === 0) _queue = shuffle(PLAYLIST);
           _player.loadVideoById(_queue[_index]);
@@ -60,39 +58,65 @@ function initYT() {
   });
 }
 
-function loadYTApi() {
+function loadYTApi(callback) {
   if (window.YT && window.YT.Player) {
-    initYT();
+    callback();
   } else {
     if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
       const tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
       document.head.appendChild(tag);
     }
-    window.onYouTubeIframeAPIReady = initYT;
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      if (prev) prev();
+      callback();
+    };
   }
 }
 
 export default function MusicPlayer() {
-  const [playing, setPlaying] = useState(_isPlaying);
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     const handler = (state) => setPlaying(state);
     _listeners.add(handler);
-    loadYTApi();
     return () => _listeners.delete(handler);
   }, []);
 
   const toggle = () => {
-    if (!_player || !_ready) return;
     if (_isPlaying) {
-      _player.pauseVideo();
+      // Pausar
+      if (_player && _ready) {
+        _player.pauseVideo();
+      }
       _isPlaying = false;
-    } else {
+      notify();
+      return;
+    }
+
+    // Iniciar — cria o player na primeira vez
+    if (!_initialized) {
+      _initialized = true;
+      loadYTApi(() => {
+        createPlayer();
+        // Aguarda o player ficar pronto via onReady, então toca
+        const waitReady = setInterval(() => {
+          if (_ready && _player) {
+            clearInterval(waitReady);
+            _player.setVolume(50);
+            _player.playVideo();
+            _isPlaying = true;
+            notify();
+          }
+        }, 200);
+      });
+    } else if (_player && _ready) {
+      _player.setVolume(50);
       _player.playVideo();
       _isPlaying = true;
+      notify();
     }
-    notify();
   };
 
   return (
