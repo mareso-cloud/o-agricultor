@@ -60,7 +60,7 @@ export default function SubscriptionStatus() {
               </p>
               <div className="bg-card/80 border border-border/40 rounded-xl p-4 mb-4">
                 <p className="text-xs text-muted-foreground mb-2">Chave PIX (E-mail):</p>
-                <p className="font-mono text-sm text-foreground select-all">contato@agricultor.local</p>
+                <p className="font-mono text-sm text-foreground select-all">12991320781</p>
                 <p className="text-xs text-muted-foreground mt-2">Valor: R$ 10,00</p>
               </div>
               <p className="text-xs text-muted-foreground">
