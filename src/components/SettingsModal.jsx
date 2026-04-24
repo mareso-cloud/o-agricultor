@@ -88,16 +88,8 @@ export default function SettingsModal({ onClose }) {
 
         <div className="p-5 space-y-6">
 
-          {/* ── ASSINATURA ── */}
+          {/* ── APOIO ── */}
           <SubscriptionStatus />
-
-          {user?.role === 'admin' && (
-            <Link to="/admin/subscriptions" onClick={onClose}>
-              <Button className="w-full h-10 border border-primary/50 bg-primary/10 text-primary hover:bg-primary/20 rounded-xl mb-2">
-                <Settings className="w-4 h-4 mr-2" /> Gerenciar Assinaturas
-              </Button>
-            </Link>
-          )}
 
           <div className="border-t border-border/40" />
 
