@@ -56,15 +56,15 @@ export default function SubscriptionStatus() {
           {!isActive && !isPending && (
             <>
               <p className="text-sm text-muted-foreground mb-4">
-                Você precisa de uma assinatura ativa para usar o app. Pague R$ 10 via PIX por ano.
+                Apoie o projeto com R$ 10/mês via PIX e tenha acesso completo ao app! É 10 a 1 pra fortalecer. 🌱
               </p>
               <div className="bg-card/80 border border-border/40 rounded-xl p-4 mb-4">
-                <p className="text-xs text-muted-foreground mb-2">Chave PIX (E-mail):</p>
+                <p className="text-xs text-muted-foreground mb-2">Chave PIX (Celular):</p>
                 <p className="font-mono text-sm text-foreground select-all">12991320781</p>
-                <p className="text-xs text-muted-foreground mt-2">Valor: R$ 10,00</p>
+                <p className="text-xs text-muted-foreground mt-2">Valor: R$ 10,00 / mês</p>
               </div>
               <p className="text-xs text-muted-foreground">
-                Após enviar o PIX, entre em contato informando sua chave para confirmar o pagamento.
+                Após enviar o PIX, entre em contato informando seu e-mail para ativar o acesso.
               </p>
             </>
           )}
