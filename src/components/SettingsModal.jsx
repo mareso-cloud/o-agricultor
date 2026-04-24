@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { X, User, Upload, Trash2, LogOut, Eye, EyeOff, Mail } from 'lucide-react';
+import { X, User, Upload, Trash2, LogOut, Eye, EyeOff, Mail, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { base44 } from '@/api/base44Client';
+import SubscriptionStatus from '@/components/SubscriptionStatus';
+import { Link } from 'react-router-dom';
 
 export default function SettingsModal({ onClose }) {
   const [user, setUser] = useState(null);
@@ -85,6 +87,19 @@ export default function SettingsModal({ onClose }) {
         </div>
 
         <div className="p-5 space-y-6">
+
+          {/* ── ASSINATURA ── */}
+          <SubscriptionStatus />
+
+          {user?.role === 'admin' && (
+            <Link to="/admin/subscriptions" onClick={onClose}>
+              <Button className="w-full h-10 border border-primary/50 bg-primary/10 text-primary hover:bg-primary/20 rounded-xl mb-2">
+                <Settings className="w-4 h-4 mr-2" /> Gerenciar Assinaturas
+              </Button>
+            </Link>
+          )}
+
+          <div className="border-t border-border/40" />
 
           {/* ── PERFIL ── */}
           <section className="space-y-4">

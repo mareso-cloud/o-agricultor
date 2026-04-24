@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 // Add page imports here
 import Home from './pages/Home';
 import PlantDetail from './pages/PlantDetail';
+import AdminSubscriptions from './pages/AdminSubscriptions';
 import MusicPlayer from './components/MusicPlayer';
 
 const AnimatedRoutes = () => {
@@ -25,6 +26,7 @@ const AnimatedRoutes = () => {
         <Routes location={location}>
           <Route path="/" element={<Home />} />
           <Route path="/plant/:id" element={<PlantDetail />} />
+          <Route path="/admin/subscriptions" element={<AdminSubscriptions />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </motion.div>
