@@ -220,7 +220,7 @@ export default function Home() {
         <img
           src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/317f584bc_Capturadetela2026-04-19042426.png"
           alt=""
-          style={{ position: 'absolute', width: '200%', bottom: 0, left: 0, filter: 'invert(1)', objectFit: 'contain', objectPosition: 'left bottom' }}
+          style={{ position: 'absolute', width: '200%', bottom: 0, left: 0, filter: 'drop-shadow(0 0 8px rgba(34,197,94,0.4))', objectFit: 'contain', objectPosition: 'left bottom' }}
         />
       </div>
       <div
@@ -232,12 +232,10 @@ export default function Home() {
           alt=""
           style={{
             position: 'absolute',
-            /* mostrar quadrante inferior-esquerdo: a imagem tem 4 vasos em linha */
-            /* queremos apenas o 1o vaso (esquerda) na metade inferior */
-            width: '200%',        /* escala para 2x a largura do container */
+            width: '200%',
             bottom: 0,
             left: 0,
-            filter: 'invert(1)',  /* preto → branco */
+            filter: 'drop-shadow(0 0 8px rgba(34,197,94,0.4))',
             objectFit: 'contain',
             objectPosition: 'left bottom',
           }}
