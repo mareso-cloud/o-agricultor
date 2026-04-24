@@ -213,32 +213,37 @@ export default function Home() {
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
 
       {/* Vasos decorativos no rodapé — todas as telas */}
+      {/* Decorative plants — mobile */}
       <div
         className="fixed bottom-0 left-0 pointer-events-none sm:hidden"
-        style={{ zIndex: 0, width: '50vw', height: '30vw', overflow: 'hidden', opacity: 0.05, left: '16px' }}
+        style={{ zIndex: 0, width: '50vw', height: '30vw', left: '16px' }}
       >
+        {/* fade mask: transparent on top, opaque on bottom — blends with bg */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, hsl(150 20% 6%) 0%, transparent 35%, transparent 100%)',
+          zIndex: 1,
+        }} />
         <img
           src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/317f584bc_Capturadetela2026-04-19042426.png"
           alt=""
-          style={{ position: 'absolute', width: '200%', bottom: 0, left: 0, filter: 'drop-shadow(0 0 8px rgba(34,197,94,0.4))', objectFit: 'contain', objectPosition: 'left bottom' }}
+          style={{ position: 'absolute', width: '200%', bottom: 0, left: 0, opacity: 0.05, filter: 'invert(1)', objectFit: 'contain', objectPosition: 'left bottom' }}
         />
       </div>
+      {/* Decorative plants — desktop */}
       <div
         className="fixed bottom-0 left-0 pointer-events-none hidden sm:block"
-        style={{ zIndex: 0, width: '25vw', height: '15vw', overflow: 'hidden', opacity: 0.05, left: '16px' }}
+        style={{ zIndex: 0, width: '25vw', height: '15vw', left: '16px' }}
       >
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, hsl(150 20% 6%) 0%, transparent 35%, transparent 100%)',
+          zIndex: 1,
+        }} />
         <img
           src="https://media.base44.com/images/public/69e1684117e402d8da5bfd05/317f584bc_Capturadetela2026-04-19042426.png"
           alt=""
-          style={{
-            position: 'absolute',
-            width: '200%',
-            bottom: 0,
-            left: 0,
-            filter: 'drop-shadow(0 0 8px rgba(34,197,94,0.4))',
-            objectFit: 'contain',
-            objectPosition: 'left bottom',
-          }}
+          style={{ position: 'absolute', width: '200%', bottom: 0, left: 0, opacity: 0.05, filter: 'invert(1)', objectFit: 'contain', objectPosition: 'left bottom' }}
         />
       </div>
     </div>
