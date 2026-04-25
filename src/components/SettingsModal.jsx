@@ -132,6 +132,14 @@ export default function SettingsModal({ onClose }) {
               <FieldGroup icon={<Mail className="w-4 h-4" />} label="E-mail">
                 <span className="text-white/40 text-sm">{user?.email || '—'}</span>
               </FieldGroup>
+
+              <FieldGroup icon={<Lock className="w-4 h-4" />} label="Senha">
+                <input type="password" placeholder="••••••••"
+                  className="w-full bg-transparent text-white text-sm outline-none placeholder:text-white/25 cursor-not-allowed"
+                  disabled
+                  title="Para alterar a senha, use a opção abaixo"
+                />
+              </FieldGroup>
             </div>
 
             <button onClick={handleSave} disabled={saving || uploading}
@@ -142,28 +150,19 @@ export default function SettingsModal({ onClose }) {
             {saveMsg && <p className="text-center text-primary text-xs mt-2">{saveMsg}</p>}
           </section>
 
-          {/* ── SENHA ── */}
+          {/* ── ALTERAR SENHA (submenu oculto) ── */}
           <section>
-            <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-4">Segurança</p>
-
             <button
               onClick={() => setShowChangePassword(v => !v)}
-              className="w-full flex items-center justify-between p-4 rounded-xl bg-white/4 border border-white/8 hover:border-primary/30 hover:bg-white/6 transition-all"
-              style={{ backgroundColor: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.08)' }}>
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'rgba(34,197,94,0.12)' }}>
-                  <Lock className="w-4 h-4 text-primary" />
-                </div>
-                <div className="text-left">
-                  <p className="text-sm font-medium text-white">Alterar senha</p>
-                  <p className="text-xs text-white/40">Trocar sua senha atual</p>
-                </div>
-              </div>
-              <ChevronRight className={`w-4 h-4 text-white/30 transition-transform ${showChangePassword ? 'rotate-90' : ''}`} />
+              className="w-full flex items-center justify-between text-left group">
+              <span className="text-xs text-white/35 group-hover:text-white/60 transition-all underline underline-offset-2">
+                Esqueci minha senha / Alterar senha
+              </span>
+              <ChevronRight className={`w-3.5 h-3.5 text-white/25 transition-transform ${showChangePassword ? 'rotate-90' : ''}`} />
             </button>
 
             {showChangePassword && (
-              <div className="mt-3 space-y-3 p-4 rounded-xl border border-white/8" style={{ backgroundColor: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.08)' }}>
+              <div className="mt-3 space-y-3 p-4 rounded-xl border" style={{ backgroundColor: 'rgba(255,255,255,0.02)', borderColor: 'rgba(255,255,255,0.08)' }}>
                 <FieldGroup icon={<Lock className="w-4 h-4" />} label="Senha atual">
                   <input type="password" value={currentPassword} onChange={e => setCurrentPassword(e.target.value)}
                     placeholder="••••••••" className="w-full bg-transparent text-white text-sm outline-none placeholder:text-white/25" />
