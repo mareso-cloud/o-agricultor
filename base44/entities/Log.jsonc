@@ -3,8 +3,7 @@
   "type": "object",
   "properties": {
     "plant_id": {
-      "type": "string",
-      "description": "ID da planta"
+      "type": "string"
     },
     "type": {
       "type": "string",
@@ -12,9 +11,16 @@
         "rega",
         "nutri\u00e7\u00e3o",
         "poda",
+        "treinamento",
+        "transplante",
+        "defolia\u00e7\u00e3o",
+        "supercrop",
         "foto",
         "medi\u00e7\u00e3o",
-        "observa\u00e7\u00e3o"
+        "observa\u00e7\u00e3o",
+        "problema",
+        "pesticida",
+        "colheita"
       ],
       "default": "observa\u00e7\u00e3o"
     },
@@ -22,36 +28,123 @@
       "type": "string",
       "format": "date"
     },
-    "ph": {
+    "ph_in": {
       "type": "number",
-      "description": "pH da \u00e1gua"
+      "description": "pH de entrada"
     },
-    "ec": {
+    "ph_out": {
       "type": "number",
-      "description": "EC/PPM"
+      "description": "pH de sa\u00edda (runoff)"
+    },
+    "ec_in": {
+      "type": "number",
+      "description": "EC de entrada"
+    },
+    "ec_out": {
+      "type": "number",
+      "description": "EC de sa\u00edda (runoff)"
     },
     "water_ml": {
       "type": "number",
-      "description": "Volume de \u00e1gua em ml"
+      "description": "Volume em ml"
     },
-    "temp": {
+    "runoff_ml": {
       "type": "number",
-      "description": "Temperatura \u00b0C"
+      "description": "Volume de runoff em ml"
+    },
+    "temp_air": {
+      "type": "number",
+      "description": "Temperatura do ar \u00b0C"
+    },
+    "temp_root": {
+      "type": "number",
+      "description": "Temperatura da raiz \u00b0C"
     },
     "humidity": {
       "type": "number",
-      "description": "Umidade %"
+      "description": "Umidade relativa %"
+    },
+    "vpd": {
+      "type": "number",
+      "description": "VPD kPa"
+    },
+    "co2": {
+      "type": "number",
+      "description": "CO2 ppm"
+    },
+    "lux": {
+      "type": "number",
+      "description": "Lux / PPFD \u00b5mol"
+    },
+    "height_cm": {
+      "type": "number",
+      "description": "Altura da planta em cm"
+    },
+    "notes": {
+      "type": "string"
     },
     "photo_url": {
       "type": "string"
     },
-    "notes": {
-      "type": "string"
+    "photo_label": {
+      "type": "string",
+      "description": "Legenda da foto"
+    },
+    "nutrients_used": {
+      "type": "string",
+      "description": "Nutrientes utilizados e doses"
+    },
+    "pest_disease": {
+      "type": "string",
+      "description": "Praga ou doen\u00e7a identificada"
+    },
+    "solution_applied": {
+      "type": "string",
+      "description": "Solu\u00e7\u00e3o/tratamento aplicado"
     }
   },
   "required": [
     "plant_id",
     "type",
     "date"
-  ]
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
 }
