@@ -14,10 +14,7 @@ export default function SubscriptionStatus() {
       <div className="bg-white rounded-2xl p-3 shadow-md">
         <img src={QR_URL} alt="QR Code PIX" className="w-44 h-44" />
       </div>
-      <div>
-        <p className="text-xs text-muted-foreground">Chave PIX (celular)</p>
-        <p className="font-mono text-sm text-foreground select-all mt-0.5">{PIX_KEY}</p>
-      </div>
+
       <p className="text-xs text-muted-foreground">Obrigado pelo apoio! 🙏</p>
     </div>
   );

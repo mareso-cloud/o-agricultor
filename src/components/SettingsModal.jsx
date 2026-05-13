@@ -207,10 +207,7 @@ export default function SettingsModal({ onClose }) {
               <div className="bg-white rounded-xl p-2.5">
                 <img src={QR_URL} alt="QR Code PIX" className="w-36 h-36" />
               </div>
-              <div className="text-center">
-                <p className="text-xs text-white/30">Chave PIX (celular)</p>
-                <p className="font-mono text-sm text-white/80 select-all mt-0.5">{PIX_KEY}</p>
-              </div>
+
             </div>
           </section>
 
